@@ -1,3 +1,3 @@
 .PHONY: build
 build:
-	go build -o libshred.so -buildmode=c-shared .
+	go build -o libshared.so -buildmode=c-shared .
