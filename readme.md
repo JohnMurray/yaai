@@ -15,6 +15,27 @@ __serialization__
 All structs in user-code need to automatically be backed by something like
 proto's for easy serialization.
 
+## compilation
+
+__build phases__
+
+(not in order)
+
+0. AST parsing
+1. proto generation for sendable messages (maybe don't need this for all structs)
+2. interface generation
+  + maybe some type of self-regitration system
+  + maybe a generic handler that needs to be exported via C FFI
+  + essentially this needs to offer a place to wire into the runtime and
+    provide some way to query meta-data about actors
+
+__build system__
+
+It may be interesting to not only have a build _system_ that uses bazel,
+but to actually use bazel to build an incremental compiler. All of the
+caching that bazel does has the potential to make for a really fast
+compiler runtime. :thinkies:
+
 ## target language
 
 __go__
