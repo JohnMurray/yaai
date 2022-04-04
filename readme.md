@@ -10,6 +10,12 @@ __shared objects__
 User code built as a shared object. The runtime needs to read this shared
 object and run some bits on it.
 
+The Go stdlib has a [plugin](https://pkg.go.dev/plugin) package that does
+some dlopen bits and runs a package's `init()` function. It doesn't support
+_unloading_, but I think that modifying this package to add unloading could
+definitely work. Using an init-based model might mean we can do more with
+standard Go in the runtime.
+
 __serialization__
 
 All structs in user-code need to automatically be backed by something like
