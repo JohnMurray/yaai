@@ -21,6 +21,21 @@ __serialization__
 All structs in user-code need to automatically be backed by something like
 proto's for easy serialization.
 
+## more things
+
+we ought to have:
+
+  + automatic serialization support for all sendable/receivable messages
+  + elimination of concurrency primitives outside of actors
+  + plugin hot-reloading 
+  + automatic clustering
+  + automatic actor ditribution across the cluster
+  + seamless actor upgrades (on plugin update)
+  + no "main" function, only actors
+  + "plugins" should be isolated to individual actors and hot-reloading
+    should be a per-actor thing
+  + updates to plugins should propegate across the cluster
+
 ## compilation
 
 __build phases__
