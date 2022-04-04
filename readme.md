@@ -57,7 +57,7 @@ but to actually use bazel to build an incremental compiler. All of the
 caching that bazel does has the potential to make for a really fast
 compiler runtime. :thinkies:
 
-## target language
+## target language / runtime
 
 __go__
 
