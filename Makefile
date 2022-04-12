@@ -1,5 +1,9 @@
+SHELL=/bin/bash -O extglob -c
+#.SHELLFLAGS=""
+
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 root_dir := $(dir $(mkfile_path))
+parser_dir := "$(root_dir)yaai/parser"
 
 .PHONY: setup
 setup:
@@ -8,7 +12,23 @@ setup:
 
 .PHONY: antlr
 antlr:
+# Delete all of the generated code. This ensures that if any files
+# dissapear from the generation process, we're not left with dangling
+# files.
+	@echo "-------------------------------------------------"
+	@echo "Cleaning generated parser files"
+	@rm -f $(parser_dir)/yaai*
+
+	@echo "-------------------------------------------------"
+	@echo "Running ANTLR"
 	java -jar bin/antlr.jar -Dlanguage=Go -o yaai/parser yaai/yaai.g4
+
+# The generate files' package doesn't match the directory layout, just
+# move the generated content up one directory.
+	@echo "-------------------------------------------------"
+	@echo "Organizing generated files"
+	@mv $(parser_dir)/yaai/* $(parser_dir)/
+	@rm -r $(parser_dir)/yaai
 
 
 
