@@ -11,8 +11,8 @@ WHITESPACE: [ \r\n\t]+ -> skip;
 KEYWORD_PACKAGE : 'package';
 
 // Rules
-package_decl : KEYWORD_PACKAGE SPACE package_name;
-package_name : LETTER package_name_end+ EOL;
+package_decl : KEYWORD_PACKAGE SPACE package_name EOL;
+package_name : LETTER package_name_end+;
 package_name_end
    : LETTER
    | NUMBER

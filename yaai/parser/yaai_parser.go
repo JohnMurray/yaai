@@ -16,15 +16,15 @@ var _ = reflect.Copy
 var _ = strconv.Itoa
 
 var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 9, 23, 4,
-	2, 9, 2, 4, 3, 9, 3, 4, 4, 9, 4, 3, 2, 3, 2, 3, 2, 3, 2, 3, 3, 3, 3, 6,
-	3, 15, 10, 3, 13, 3, 14, 3, 16, 3, 3, 3, 3, 3, 4, 3, 4, 3, 4, 2, 2, 5,
-	2, 4, 6, 2, 3, 4, 2, 3, 3, 5, 6, 2, 20, 2, 8, 3, 2, 2, 2, 4, 12, 3, 2,
-	2, 2, 6, 20, 3, 2, 2, 2, 8, 9, 7, 9, 2, 2, 9, 10, 7, 4, 2, 2, 10, 11, 5,
-	4, 3, 2, 11, 3, 3, 2, 2, 2, 12, 14, 7, 5, 2, 2, 13, 15, 5, 6, 4, 2, 14,
-	13, 3, 2, 2, 2, 15, 16, 3, 2, 2, 2, 16, 14, 3, 2, 2, 2, 16, 17, 3, 2, 2,
-	2, 17, 18, 3, 2, 2, 2, 18, 19, 7, 7, 2, 2, 19, 5, 3, 2, 2, 2, 20, 21, 9,
-	2, 2, 2, 21, 7, 3, 2, 2, 2, 3, 16,
+	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 9, 22, 4,
+	2, 9, 2, 4, 3, 9, 3, 4, 4, 9, 4, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 3, 3,
+	3, 6, 3, 16, 10, 3, 13, 3, 14, 3, 17, 3, 4, 3, 4, 3, 4, 2, 2, 5, 2, 4,
+	6, 2, 3, 4, 2, 3, 3, 5, 6, 2, 19, 2, 8, 3, 2, 2, 2, 4, 13, 3, 2, 2, 2,
+	6, 19, 3, 2, 2, 2, 8, 9, 7, 9, 2, 2, 9, 10, 7, 4, 2, 2, 10, 11, 5, 4, 3,
+	2, 11, 12, 7, 7, 2, 2, 12, 3, 3, 2, 2, 2, 13, 15, 7, 5, 2, 2, 14, 16, 5,
+	6, 4, 2, 15, 14, 3, 2, 2, 2, 16, 17, 3, 2, 2, 2, 17, 15, 3, 2, 2, 2, 17,
+	18, 3, 2, 2, 2, 18, 5, 3, 2, 2, 2, 19, 20, 9, 2, 2, 2, 20, 7, 3, 2, 2,
+	2, 3, 17,
 }
 var literalNames = []string{
 	"", "", "' '", "", "'_'", "", "", "'package'",
@@ -141,6 +141,10 @@ func (s *Package_declContext) Package_name() IPackage_nameContext {
 	return t.(IPackage_nameContext)
 }
 
+func (s *Package_declContext) EOL() antlr.TerminalNode {
+	return s.GetToken(YaaiParserEOL, 0)
+}
+
 func (s *Package_declContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
@@ -197,6 +201,10 @@ func (p *YaaiParser) Package_decl() (localctx IPackage_declContext) {
 		p.SetState(8)
 		p.Package_name()
 	}
+	{
+		p.SetState(9)
+		p.Match(YaaiParserEOL)
+	}
 
 	return localctx
 }
@@ -241,10 +249,6 @@ func (s *Package_nameContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *Package_nameContext) LETTER() antlr.TerminalNode {
 	return s.GetToken(YaaiParserLETTER, 0)
-}
-
-func (s *Package_nameContext) EOL() antlr.TerminalNode {
-	return s.GetToken(YaaiParserEOL, 0)
 }
 
 func (s *Package_nameContext) AllPackage_name_end() []IPackage_name_endContext {
@@ -316,26 +320,22 @@ func (p *YaaiParser) Package_name() (localctx IPackage_nameContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(10)
+		p.SetState(11)
 		p.Match(YaaiParserLETTER)
 	}
-	p.SetState(12)
+	p.SetState(13)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
 	for ok := true; ok; ok = (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<YaaiParserNUMBER)|(1<<YaaiParserLETTER)|(1<<YaaiParserUNDERSCORE))) != 0) {
 		{
-			p.SetState(11)
+			p.SetState(12)
 			p.Package_name_end()
 		}
 
-		p.SetState(14)
+		p.SetState(15)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
-	}
-	{
-		p.SetState(16)
-		p.Match(YaaiParserEOL)
 	}
 
 	return localctx
@@ -437,7 +437,7 @@ func (p *YaaiParser) Package_name_end() (localctx IPackage_name_endContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(18)
+		p.SetState(17)
 		_la = p.GetTokenStream().LA(1)
 
 		if !(((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<YaaiParserNUMBER)|(1<<YaaiParserLETTER)|(1<<YaaiParserUNDERSCORE))) != 0) {
