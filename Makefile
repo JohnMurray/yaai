@@ -21,7 +21,7 @@ antlr:
 
 	@echo "-------------------------------------------------"
 	@echo "Running ANTLR"
-	java -jar bin/antlr.jar -Dlanguage=Go -o yaai/parser yaai/yaai.g4
+	java -jar bin/antlr.jar -Dlanguage=Go -o yaai/parser yaai/Yaai.g4
 
 # The generate files' package doesn't match the directory layout, just
 # move the generated content up one directory.
@@ -35,7 +35,11 @@ antlr:
 .PHONY: antlr-debug
 antlr-debug:
 	@mkdir -p build/antlr-debug
-	@java -jar bin/antlr.jar -o build/antlr-debug yaai/yaai.g4
+	@java -jar bin/antlr.jar -o build/antlr-debug yaai/Yaai.g4
 	@cd build/antlr-debug/yaai && javac -cp ".:$(root_dir)/bin/antlr.jar" -g yaai*.java
 	@echo "Run:"
 	@echo "cd build/antlr-debug/yaai && java -cp  \".:$(root_dir)/bin/antlr.jar\" -Xmx500M org.antlr.v4.gui.TestRig yaai TOKEN -gui; popd"
+
+.PHONY: test
+test:
+	@go test -v ./...

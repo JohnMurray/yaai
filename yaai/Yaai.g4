@@ -1,20 +1,18 @@
-grammar yaai;
+grammar Yaai;
 
 // Tokens
-MUL: '*';
-DIV: '/';
-ADD: '+';
-SUB: '-';
 NUMBER: [0-9];
-WHITESPACE: [ \r\n\t]+ -> skip;
 SPACE: ' ';
-LETTER : [a-z];
+LETTER : [a-zA-Z];
 UNDERSCORE : '_';
+EOL: [\n\r]+;
+WHITESPACE: [ \r\n\t]+ -> skip;
+
+KEYWORD_PACKAGE : 'package';
 
 // Rules
-package_decl : 'package' SPACE package_name;
-package_name : package_name_start package_name_end+ EOL;
-package_name_start : LETTER;
+package_decl : KEYWORD_PACKAGE SPACE package_name;
+package_name : LETTER package_name_end+ EOL;
 package_name_end
    : LETTER
    | NUMBER
