@@ -16,21 +16,21 @@ var _ = reflect.Copy
 var _ = strconv.Itoa
 
 var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 10, 23, 4,
+	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 10, 21, 4,
 	2, 9, 2, 4, 3, 9, 3, 4, 4, 9, 4, 3, 2, 3, 2, 3, 2, 3, 3, 3, 3, 3, 3, 3,
-	3, 3, 3, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 2, 2, 5, 2, 4, 6, 2,
-	2, 2, 19, 2, 8, 3, 2, 2, 2, 4, 11, 3, 2, 2, 2, 6, 16, 3, 2, 2, 2, 8, 9,
-	5, 4, 3, 2, 9, 10, 7, 2, 2, 3, 10, 3, 3, 2, 2, 2, 11, 12, 7, 4, 2, 2, 12,
-	13, 7, 8, 2, 2, 13, 14, 7, 5, 2, 2, 14, 15, 7, 9, 2, 2, 15, 5, 3, 2, 2,
-	2, 16, 17, 7, 3, 2, 2, 17, 18, 7, 8, 2, 2, 18, 19, 7, 5, 2, 2, 19, 20,
-	7, 6, 2, 2, 20, 21, 7, 7, 2, 2, 21, 7, 3, 2, 2, 2, 2,
+	3, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 2, 2, 5, 2, 4, 6, 2, 2, 2, 17, 2,
+	8, 3, 2, 2, 2, 4, 11, 3, 2, 2, 2, 6, 15, 3, 2, 2, 2, 8, 9, 5, 4, 3, 2,
+	9, 10, 7, 2, 2, 3, 10, 3, 3, 2, 2, 2, 11, 12, 7, 3, 2, 2, 12, 13, 7, 6,
+	2, 2, 13, 14, 7, 9, 2, 2, 14, 5, 3, 2, 2, 2, 15, 16, 7, 4, 2, 2, 16, 17,
+	7, 6, 2, 2, 17, 18, 7, 7, 2, 2, 18, 19, 7, 8, 2, 2, 19, 7, 3, 2, 2, 2,
+	2,
 }
 var literalNames = []string{
-	"", "'actor'", "'package'", "", "'{'", "'}'", "' '",
+	"", "'package '", "'actor '", "'package'", "", "'{'", "'}'",
 }
 var symbolicNames = []string{
-	"", "", "KEYWORD_PACKAGE", "IDENTIFIER", "L_BRACKET", "R_BRACKET", "SPACE",
-	"EOL", "WHITESPACE",
+	"", "", "", "KEYWORD_PACKAGE", "IDENTIFIER", "L_BRACKET", "R_BRACKET",
+	"EOL", "WS",
 }
 
 var ruleNames = []string{
@@ -70,13 +70,13 @@ func NewYaaiParser(input antlr.TokenStream) *YaaiParser {
 const (
 	YaaiParserEOF             = antlr.TokenEOF
 	YaaiParserT__0            = 1
-	YaaiParserKEYWORD_PACKAGE = 2
-	YaaiParserIDENTIFIER      = 3
-	YaaiParserL_BRACKET       = 4
-	YaaiParserR_BRACKET       = 5
-	YaaiParserSPACE           = 6
+	YaaiParserT__1            = 2
+	YaaiParserKEYWORD_PACKAGE = 3
+	YaaiParserIDENTIFIER      = 4
+	YaaiParserL_BRACKET       = 5
+	YaaiParserR_BRACKET       = 6
 	YaaiParserEOL             = 7
-	YaaiParserWHITESPACE      = 8
+	YaaiParserWS              = 8
 )
 
 // YaaiParser rules.
@@ -232,14 +232,6 @@ func NewPackage_declContext(parser antlr.Parser, parent antlr.ParserRuleContext,
 
 func (s *Package_declContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *Package_declContext) KEYWORD_PACKAGE() antlr.TerminalNode {
-	return s.GetToken(YaaiParserKEYWORD_PACKAGE, 0)
-}
-
-func (s *Package_declContext) SPACE() antlr.TerminalNode {
-	return s.GetToken(YaaiParserSPACE, 0)
-}
-
 func (s *Package_declContext) IDENTIFIER() antlr.TerminalNode {
 	return s.GetToken(YaaiParserIDENTIFIER, 0)
 }
@@ -294,18 +286,14 @@ func (p *YaaiParser) Package_decl() (localctx IPackage_declContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(9)
-		p.Match(YaaiParserKEYWORD_PACKAGE)
+		p.Match(YaaiParserT__0)
 	}
 	{
 		p.SetState(10)
-		p.Match(YaaiParserSPACE)
-	}
-	{
-		p.SetState(11)
 		p.Match(YaaiParserIDENTIFIER)
 	}
 	{
-		p.SetState(12)
+		p.SetState(11)
 		p.Match(YaaiParserEOL)
 	}
 
@@ -319,20 +307,13 @@ type IActorContext interface {
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
 
-	// GetKeyword returns the keyword token.
-	GetKeyword() antlr.Token
-
-	// SetKeyword sets the keyword token.
-	SetKeyword(antlr.Token)
-
 	// IsActorContext differentiates from other interfaces.
 	IsActorContext()
 }
 
 type ActorContext struct {
 	*antlr.BaseParserRuleContext
-	parser  antlr.Parser
-	keyword antlr.Token
+	parser antlr.Parser
 }
 
 func NewEmptyActorContext() *ActorContext {
@@ -356,14 +337,6 @@ func NewActorContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoki
 }
 
 func (s *ActorContext) GetParser() antlr.Parser { return s.parser }
-
-func (s *ActorContext) GetKeyword() antlr.Token { return s.keyword }
-
-func (s *ActorContext) SetKeyword(v antlr.Token) { s.keyword = v }
-
-func (s *ActorContext) SPACE() antlr.TerminalNode {
-	return s.GetToken(YaaiParserSPACE, 0)
-}
 
 func (s *ActorContext) IDENTIFIER() antlr.TerminalNode {
 	return s.GetToken(YaaiParserIDENTIFIER, 0)
@@ -422,26 +395,19 @@ func (p *YaaiParser) Actor() (localctx IActorContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
+		p.SetState(13)
+		p.Match(YaaiParserT__1)
+	}
+	{
 		p.SetState(14)
-
-		var _m = p.Match(YaaiParserT__0)
-
-		localctx.(*ActorContext).keyword = _m
-	}
-	{
-		p.SetState(15)
-		p.Match(YaaiParserSPACE)
-	}
-	{
-		p.SetState(16)
 		p.Match(YaaiParserIDENTIFIER)
 	}
 	{
-		p.SetState(17)
+		p.SetState(15)
 		p.Match(YaaiParserL_BRACKET)
 	}
 	{
-		p.SetState(18)
+		p.SetState(16)
 		p.Match(YaaiParserR_BRACKET)
 	}
 
