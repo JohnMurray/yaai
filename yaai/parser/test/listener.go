@@ -17,11 +17,14 @@ type testListener struct {
 }
 
 func createParser(input string) (*parser.YaaiParser, *testListener) {
+	tl := &testListener{}
+
 	// setup the input
 	is := antlr.NewInputStream(input)
 
 	// create the lexer
 	lexer := parser.NewYaaiLexer(is)
+	lexer.AddErrorListener(tl)
 	// for {
 	// 	t := lexer.NextToken()
 	// 	if t.GetTokenType() == antlr.TokenEOF {
@@ -34,10 +37,16 @@ func createParser(input string) (*parser.YaaiParser, *testListener) {
 
 	// create the parser
 	p := parser.NewYaaiParser(stream)
-	tl := &testListener{}
 	p.AddErrorListener(tl)
 	return p, tl
 }
+
+func (tl *testListener) ExitPackage_decl(c *parser.Package_declContext) {
+	tl.packageName = c.IDENTIFIER().GetText()
+}
+
+// --------------------------------------------------------------------------------
+// antlr.ErrorListener (parser & lexer)
 
 // Populate the listener with error encountered. Try and form
 // something that's somewhat readable to troubleshoot.
@@ -52,6 +61,15 @@ func (tl *testListener) SyntaxError(recognizer antlr.Recognizer,
 	))
 }
 
-func (tl *testListener) ExitPackage_decl(c *parser.Package_declContext) {
-	tl.packageName = c.IDENTIFIER().GetText()
+func (tl *testListener) ReportAmbiguity(recognizer antlr.Parser, dfa *antlr.DFA, startIndex, stopIndex int, exact bool, ambigAlts *antlr.BitSet, configs antlr.ATNConfigSet) {
+	fmt.Println("!!!!!!!!!!!!!!!!! Report Ambiguity [error listener]")
+	fmt.Println("  --> This is new.... /shrug")
+}
+func (tl *testListener) ReportAttemptingFullContext(recognizer antlr.Parser, dfa *antlr.DFA, startIndex, stopIndex int, conflictingAlts *antlr.BitSet, configs antlr.ATNConfigSet) {
+	fmt.Println("!!!!!!!!!!!!!!!!! Report Attempting Full Context [error listener]")
+	fmt.Println("  --> This is new.... /shrug")
+}
+func (tl *testListener) ReportContextSensitivity(recognizer antlr.Parser, dfa *antlr.DFA, startIndex, stopIndex, prediction int, configs antlr.ATNConfigSet) {
+	fmt.Println("!!!!!!!!!!!!!!!!! Report Context Sensitivity [error listener]")
+	fmt.Println("  --> This is new.... /shrug")
 }

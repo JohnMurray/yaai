@@ -9,14 +9,14 @@ KEYWORD_PACKAGE : 'package';
 IDENTIFIER: [a-zA-Z][a-zA-Z0-9_]+;
 L_BRACKET: '{';
 R_BRACKET: '}';
-SPACE: ' ' -> skip;
+SPACE: ' ';
 EOL: [\n\r]+;
 
 // NUMBER: [0-9];
 // LETTER : [a-zA-Z];
 // UNDERSCORE : '_';
-// WHITESPACE: [ \r\n\t]+ -> skip;
 
+WHITESPACE: [ \r\n\t]+ -> skip;
 
 // --------------------------------------------
 // Rules

@@ -16,7 +16,7 @@ var _ = reflect.Copy
 var _ = strconv.Itoa
 
 var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 9, 23, 4,
+	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 10, 23, 4,
 	2, 9, 2, 4, 3, 9, 3, 4, 4, 9, 4, 3, 2, 3, 2, 3, 2, 3, 3, 3, 3, 3, 3, 3,
 	3, 3, 3, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 2, 2, 5, 2, 4, 6, 2,
 	2, 2, 19, 2, 8, 3, 2, 2, 2, 4, 11, 3, 2, 2, 2, 6, 16, 3, 2, 2, 2, 8, 9,
@@ -30,7 +30,7 @@ var literalNames = []string{
 }
 var symbolicNames = []string{
 	"", "", "KEYWORD_PACKAGE", "IDENTIFIER", "L_BRACKET", "R_BRACKET", "SPACE",
-	"EOL",
+	"EOL", "WHITESPACE",
 }
 
 var ruleNames = []string{
@@ -76,6 +76,7 @@ const (
 	YaaiParserR_BRACKET       = 5
 	YaaiParserSPACE           = 6
 	YaaiParserEOL             = 7
+	YaaiParserWHITESPACE      = 8
 )
 
 // YaaiParser rules.
