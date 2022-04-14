@@ -16,25 +16,25 @@ var _ = reflect.Copy
 var _ = strconv.Itoa
 
 var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 9, 22, 4,
-	2, 9, 2, 4, 3, 9, 3, 4, 4, 9, 4, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 3, 3,
-	3, 6, 3, 16, 10, 3, 13, 3, 14, 3, 17, 3, 4, 3, 4, 3, 4, 2, 2, 5, 2, 4,
-	6, 2, 3, 4, 2, 3, 3, 5, 6, 2, 19, 2, 8, 3, 2, 2, 2, 4, 13, 3, 2, 2, 2,
-	6, 19, 3, 2, 2, 2, 8, 9, 7, 9, 2, 2, 9, 10, 7, 4, 2, 2, 10, 11, 5, 4, 3,
-	2, 11, 12, 7, 7, 2, 2, 12, 3, 3, 2, 2, 2, 13, 15, 7, 5, 2, 2, 14, 16, 5,
-	6, 4, 2, 15, 14, 3, 2, 2, 2, 16, 17, 3, 2, 2, 2, 17, 15, 3, 2, 2, 2, 17,
-	18, 3, 2, 2, 2, 18, 5, 3, 2, 2, 2, 19, 20, 9, 2, 2, 2, 20, 7, 3, 2, 2,
-	2, 3, 17,
+	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 9, 23, 4,
+	2, 9, 2, 4, 3, 9, 3, 4, 4, 9, 4, 3, 2, 3, 2, 3, 2, 3, 3, 3, 3, 3, 3, 3,
+	3, 3, 3, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 2, 2, 5, 2, 4, 6, 2,
+	2, 2, 19, 2, 8, 3, 2, 2, 2, 4, 11, 3, 2, 2, 2, 6, 16, 3, 2, 2, 2, 8, 9,
+	5, 4, 3, 2, 9, 10, 7, 2, 2, 3, 10, 3, 3, 2, 2, 2, 11, 12, 7, 4, 2, 2, 12,
+	13, 7, 8, 2, 2, 13, 14, 7, 5, 2, 2, 14, 15, 7, 9, 2, 2, 15, 5, 3, 2, 2,
+	2, 16, 17, 7, 3, 2, 2, 17, 18, 7, 8, 2, 2, 18, 19, 7, 5, 2, 2, 19, 20,
+	7, 6, 2, 2, 20, 21, 7, 7, 2, 2, 21, 7, 3, 2, 2, 2, 2,
 }
 var literalNames = []string{
-	"", "", "' '", "", "'_'", "", "", "'package'",
+	"", "'actor'", "'package'", "", "'{'", "'}'", "' '",
 }
 var symbolicNames = []string{
-	"", "NUMBER", "SPACE", "LETTER", "UNDERSCORE", "EOL", "WHITESPACE", "KEYWORD_PACKAGE",
+	"", "", "KEYWORD_PACKAGE", "IDENTIFIER", "L_BRACKET", "R_BRACKET", "SPACE",
+	"EOL",
 }
 
 var ruleNames = []string{
-	"package_decl", "package_name", "package_name_end",
+	"unit", "package_decl", "actor",
 }
 
 type YaaiParser struct {
@@ -69,21 +69,129 @@ func NewYaaiParser(input antlr.TokenStream) *YaaiParser {
 // YaaiParser tokens.
 const (
 	YaaiParserEOF             = antlr.TokenEOF
-	YaaiParserNUMBER          = 1
-	YaaiParserSPACE           = 2
-	YaaiParserLETTER          = 3
-	YaaiParserUNDERSCORE      = 4
-	YaaiParserEOL             = 5
-	YaaiParserWHITESPACE      = 6
-	YaaiParserKEYWORD_PACKAGE = 7
+	YaaiParserT__0            = 1
+	YaaiParserKEYWORD_PACKAGE = 2
+	YaaiParserIDENTIFIER      = 3
+	YaaiParserL_BRACKET       = 4
+	YaaiParserR_BRACKET       = 5
+	YaaiParserSPACE           = 6
+	YaaiParserEOL             = 7
 )
 
 // YaaiParser rules.
 const (
-	YaaiParserRULE_package_decl     = 0
-	YaaiParserRULE_package_name     = 1
-	YaaiParserRULE_package_name_end = 2
+	YaaiParserRULE_unit         = 0
+	YaaiParserRULE_package_decl = 1
+	YaaiParserRULE_actor        = 2
 )
+
+// IUnitContext is an interface to support dynamic dispatch.
+type IUnitContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// IsUnitContext differentiates from other interfaces.
+	IsUnitContext()
+}
+
+type UnitContext struct {
+	*antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyUnitContext() *UnitContext {
+	var p = new(UnitContext)
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	p.RuleIndex = YaaiParserRULE_unit
+	return p
+}
+
+func (*UnitContext) IsUnitContext() {}
+
+func NewUnitContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *UnitContext {
+	var p = new(UnitContext)
+
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = YaaiParserRULE_unit
+
+	return p
+}
+
+func (s *UnitContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *UnitContext) Package_decl() IPackage_declContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IPackage_declContext)(nil)).Elem(), 0)
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IPackage_declContext)
+}
+
+func (s *UnitContext) EOF() antlr.TerminalNode {
+	return s.GetToken(YaaiParserEOF, 0)
+}
+
+func (s *UnitContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *UnitContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *UnitContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(YaaiListener); ok {
+		listenerT.EnterUnit(s)
+	}
+}
+
+func (s *UnitContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(YaaiListener); ok {
+		listenerT.ExitUnit(s)
+	}
+}
+
+func (p *YaaiParser) Unit() (localctx IUnitContext) {
+	this := p
+	_ = this
+
+	localctx = NewUnitContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 0, YaaiParserRULE_unit)
+
+	defer func() {
+		p.ExitRule()
+	}()
+
+	defer func() {
+		if err := recover(); err != nil {
+			if v, ok := err.(antlr.RecognitionException); ok {
+				localctx.SetException(v)
+				p.GetErrorHandler().ReportError(p, v)
+				p.GetErrorHandler().Recover(p, v)
+			} else {
+				panic(err)
+			}
+		}
+	}()
+
+	p.EnterOuterAlt(localctx, 1)
+	{
+		p.SetState(6)
+		p.Package_decl()
+	}
+	{
+		p.SetState(7)
+		p.Match(YaaiParserEOF)
+	}
+
+	return localctx
+}
 
 // IPackage_declContext is an interface to support dynamic dispatch.
 type IPackage_declContext interface {
@@ -131,14 +239,8 @@ func (s *Package_declContext) SPACE() antlr.TerminalNode {
 	return s.GetToken(YaaiParserSPACE, 0)
 }
 
-func (s *Package_declContext) Package_name() IPackage_nameContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IPackage_nameContext)(nil)).Elem(), 0)
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IPackage_nameContext)
+func (s *Package_declContext) IDENTIFIER() antlr.TerminalNode {
+	return s.GetToken(YaaiParserIDENTIFIER, 0)
 }
 
 func (s *Package_declContext) EOL() antlr.TerminalNode {
@@ -170,7 +272,7 @@ func (p *YaaiParser) Package_decl() (localctx IPackage_declContext) {
 	_ = this
 
 	localctx = NewPackage_declContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 0, YaaiParserRULE_package_decl)
+	p.EnterRule(localctx, 2, YaaiParserRULE_package_decl)
 
 	defer func() {
 		p.ExitRule()
@@ -190,117 +292,116 @@ func (p *YaaiParser) Package_decl() (localctx IPackage_declContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(6)
+		p.SetState(9)
 		p.Match(YaaiParserKEYWORD_PACKAGE)
 	}
 	{
-		p.SetState(7)
+		p.SetState(10)
 		p.Match(YaaiParserSPACE)
 	}
 	{
-		p.SetState(8)
-		p.Package_name()
+		p.SetState(11)
+		p.Match(YaaiParserIDENTIFIER)
 	}
 	{
-		p.SetState(9)
+		p.SetState(12)
 		p.Match(YaaiParserEOL)
 	}
 
 	return localctx
 }
 
-// IPackage_nameContext is an interface to support dynamic dispatch.
-type IPackage_nameContext interface {
+// IActorContext is an interface to support dynamic dispatch.
+type IActorContext interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
 
-	// IsPackage_nameContext differentiates from other interfaces.
-	IsPackage_nameContext()
+	// GetKeyword returns the keyword token.
+	GetKeyword() antlr.Token
+
+	// SetKeyword sets the keyword token.
+	SetKeyword(antlr.Token)
+
+	// IsActorContext differentiates from other interfaces.
+	IsActorContext()
 }
 
-type Package_nameContext struct {
+type ActorContext struct {
 	*antlr.BaseParserRuleContext
-	parser antlr.Parser
+	parser  antlr.Parser
+	keyword antlr.Token
 }
 
-func NewEmptyPackage_nameContext() *Package_nameContext {
-	var p = new(Package_nameContext)
+func NewEmptyActorContext() *ActorContext {
+	var p = new(ActorContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = YaaiParserRULE_package_name
+	p.RuleIndex = YaaiParserRULE_actor
 	return p
 }
 
-func (*Package_nameContext) IsPackage_nameContext() {}
+func (*ActorContext) IsActorContext() {}
 
-func NewPackage_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Package_nameContext {
-	var p = new(Package_nameContext)
+func NewActorContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *ActorContext {
+	var p = new(ActorContext)
 
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = YaaiParserRULE_package_name
+	p.RuleIndex = YaaiParserRULE_actor
 
 	return p
 }
 
-func (s *Package_nameContext) GetParser() antlr.Parser { return s.parser }
+func (s *ActorContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *Package_nameContext) LETTER() antlr.TerminalNode {
-	return s.GetToken(YaaiParserLETTER, 0)
+func (s *ActorContext) GetKeyword() antlr.Token { return s.keyword }
+
+func (s *ActorContext) SetKeyword(v antlr.Token) { s.keyword = v }
+
+func (s *ActorContext) SPACE() antlr.TerminalNode {
+	return s.GetToken(YaaiParserSPACE, 0)
 }
 
-func (s *Package_nameContext) AllPackage_name_end() []IPackage_name_endContext {
-	var ts = s.GetTypedRuleContexts(reflect.TypeOf((*IPackage_name_endContext)(nil)).Elem())
-	var tst = make([]IPackage_name_endContext, len(ts))
-
-	for i, t := range ts {
-		if t != nil {
-			tst[i] = t.(IPackage_name_endContext)
-		}
-	}
-
-	return tst
+func (s *ActorContext) IDENTIFIER() antlr.TerminalNode {
+	return s.GetToken(YaaiParserIDENTIFIER, 0)
 }
 
-func (s *Package_nameContext) Package_name_end(i int) IPackage_name_endContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IPackage_name_endContext)(nil)).Elem(), i)
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IPackage_name_endContext)
+func (s *ActorContext) L_BRACKET() antlr.TerminalNode {
+	return s.GetToken(YaaiParserL_BRACKET, 0)
 }
 
-func (s *Package_nameContext) GetRuleContext() antlr.RuleContext {
+func (s *ActorContext) R_BRACKET() antlr.TerminalNode {
+	return s.GetToken(YaaiParserR_BRACKET, 0)
+}
+
+func (s *ActorContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *Package_nameContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *ActorContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *Package_nameContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *ActorContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(YaaiListener); ok {
-		listenerT.EnterPackage_name(s)
+		listenerT.EnterActor(s)
 	}
 }
 
-func (s *Package_nameContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *ActorContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(YaaiListener); ok {
-		listenerT.ExitPackage_name(s)
+		listenerT.ExitActor(s)
 	}
 }
 
-func (p *YaaiParser) Package_name() (localctx IPackage_nameContext) {
+func (p *YaaiParser) Actor() (localctx IActorContext) {
 	this := p
 	_ = this
 
-	localctx = NewPackage_nameContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 2, YaaiParserRULE_package_name)
-	var _la int
+	localctx = NewActorContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 4, YaaiParserRULE_actor)
 
 	defer func() {
 		p.ExitRule()
@@ -320,132 +421,27 @@ func (p *YaaiParser) Package_name() (localctx IPackage_nameContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(11)
-		p.Match(YaaiParserLETTER)
+		p.SetState(14)
+
+		var _m = p.Match(YaaiParserT__0)
+
+		localctx.(*ActorContext).keyword = _m
 	}
-	p.SetState(13)
-	p.GetErrorHandler().Sync(p)
-	_la = p.GetTokenStream().LA(1)
-
-	for ok := true; ok; ok = (((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<YaaiParserNUMBER)|(1<<YaaiParserLETTER)|(1<<YaaiParserUNDERSCORE))) != 0) {
-		{
-			p.SetState(12)
-			p.Package_name_end()
-		}
-
+	{
 		p.SetState(15)
-		p.GetErrorHandler().Sync(p)
-		_la = p.GetTokenStream().LA(1)
+		p.Match(YaaiParserSPACE)
 	}
-
-	return localctx
-}
-
-// IPackage_name_endContext is an interface to support dynamic dispatch.
-type IPackage_name_endContext interface {
-	antlr.ParserRuleContext
-
-	// GetParser returns the parser.
-	GetParser() antlr.Parser
-
-	// IsPackage_name_endContext differentiates from other interfaces.
-	IsPackage_name_endContext()
-}
-
-type Package_name_endContext struct {
-	*antlr.BaseParserRuleContext
-	parser antlr.Parser
-}
-
-func NewEmptyPackage_name_endContext() *Package_name_endContext {
-	var p = new(Package_name_endContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = YaaiParserRULE_package_name_end
-	return p
-}
-
-func (*Package_name_endContext) IsPackage_name_endContext() {}
-
-func NewPackage_name_endContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Package_name_endContext {
-	var p = new(Package_name_endContext)
-
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
-
-	p.parser = parser
-	p.RuleIndex = YaaiParserRULE_package_name_end
-
-	return p
-}
-
-func (s *Package_name_endContext) GetParser() antlr.Parser { return s.parser }
-
-func (s *Package_name_endContext) LETTER() antlr.TerminalNode {
-	return s.GetToken(YaaiParserLETTER, 0)
-}
-
-func (s *Package_name_endContext) NUMBER() antlr.TerminalNode {
-	return s.GetToken(YaaiParserNUMBER, 0)
-}
-
-func (s *Package_name_endContext) UNDERSCORE() antlr.TerminalNode {
-	return s.GetToken(YaaiParserUNDERSCORE, 0)
-}
-
-func (s *Package_name_endContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *Package_name_endContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
-	return antlr.TreesStringTree(s, ruleNames, recog)
-}
-
-func (s *Package_name_endContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(YaaiListener); ok {
-		listenerT.EnterPackage_name_end(s)
+	{
+		p.SetState(16)
+		p.Match(YaaiParserIDENTIFIER)
 	}
-}
-
-func (s *Package_name_endContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(YaaiListener); ok {
-		listenerT.ExitPackage_name_end(s)
-	}
-}
-
-func (p *YaaiParser) Package_name_end() (localctx IPackage_name_endContext) {
-	this := p
-	_ = this
-
-	localctx = NewPackage_name_endContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 4, YaaiParserRULE_package_name_end)
-	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
-	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(17)
-		_la = p.GetTokenStream().LA(1)
-
-		if !(((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<YaaiParserNUMBER)|(1<<YaaiParserLETTER)|(1<<YaaiParserUNDERSCORE))) != 0) {
-			p.GetErrorHandler().RecoverInline(p)
-		} else {
-			p.GetErrorHandler().ReportMatch(p)
-			p.Consume()
-		}
+		p.Match(YaaiParserL_BRACKET)
+	}
+	{
+		p.SetState(18)
+		p.Match(YaaiParserR_BRACKET)
 	}
 
 	return localctx

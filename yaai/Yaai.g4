@@ -1,28 +1,31 @@
 grammar Yaai;
 
+// --------------------------------------------
 // Tokens
-NUMBER: [0-9];
-SPACE: ' ';
-LETTER : [a-zA-Z];
-UNDERSCORE : '_';
-EOL: [\n\r]+;
-WHITESPACE: [ \r\n\t]+ -> skip;
 
+// Keywords
 KEYWORD_PACKAGE : 'package';
 
-// Rules
-package_decl : KEYWORD_PACKAGE SPACE package_name EOL;
-package_name : LETTER package_name_end+;
-package_name_end
-   : LETTER
-   | NUMBER
-   | UNDERSCORE
-   ;
+IDENTIFIER: [a-zA-Z][a-zA-Z0-9_]+;
+L_BRACKET: '{';
+R_BRACKET: '}';
+SPACE: ' ' -> skip;
+EOL: [\n\r]+;
 
-// start : expression EOF;
-// 
-// expression
-//    : expression op=('*'|'/') expression # MulDiv
-//    | expression op=('+'|'-') expression # AddSub
-//    | NUMBER                             # Number
-//    ;
+// NUMBER: [0-9];
+// LETTER : [a-zA-Z];
+// UNDERSCORE : '_';
+// WHITESPACE: [ \r\n\t]+ -> skip;
+
+
+// --------------------------------------------
+// Rules
+
+// Start rule
+unit :
+   package_decl
+   EOF;
+
+package_decl : KEYWORD_PACKAGE SPACE IDENTIFIER EOL;
+
+actor : keyword='actor' SPACE IDENTIFIER L_BRACKET R_BRACKET;

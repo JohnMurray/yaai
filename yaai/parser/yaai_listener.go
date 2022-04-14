@@ -8,21 +8,21 @@ import "github.com/antlr/antlr4/runtime/Go/antlr"
 type YaaiListener interface {
 	antlr.ParseTreeListener
 
+	// EnterUnit is called when entering the unit production.
+	EnterUnit(c *UnitContext)
+
 	// EnterPackage_decl is called when entering the package_decl production.
 	EnterPackage_decl(c *Package_declContext)
 
-	// EnterPackage_name is called when entering the package_name production.
-	EnterPackage_name(c *Package_nameContext)
+	// EnterActor is called when entering the actor production.
+	EnterActor(c *ActorContext)
 
-	// EnterPackage_name_end is called when entering the package_name_end production.
-	EnterPackage_name_end(c *Package_name_endContext)
+	// ExitUnit is called when exiting the unit production.
+	ExitUnit(c *UnitContext)
 
 	// ExitPackage_decl is called when exiting the package_decl production.
 	ExitPackage_decl(c *Package_declContext)
 
-	// ExitPackage_name is called when exiting the package_name production.
-	ExitPackage_name(c *Package_nameContext)
-
-	// ExitPackage_name_end is called when exiting the package_name_end production.
-	ExitPackage_name_end(c *Package_name_endContext)
+	// ExitActor is called when exiting the actor production.
+	ExitActor(c *ActorContext)
 }

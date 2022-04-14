@@ -21,20 +21,20 @@ func (s *BaseYaaiListener) EnterEveryRule(ctx antlr.ParserRuleContext) {}
 // ExitEveryRule is called when any rule is exited.
 func (s *BaseYaaiListener) ExitEveryRule(ctx antlr.ParserRuleContext) {}
 
+// EnterUnit is called when production unit is entered.
+func (s *BaseYaaiListener) EnterUnit(ctx *UnitContext) {}
+
+// ExitUnit is called when production unit is exited.
+func (s *BaseYaaiListener) ExitUnit(ctx *UnitContext) {}
+
 // EnterPackage_decl is called when production package_decl is entered.
 func (s *BaseYaaiListener) EnterPackage_decl(ctx *Package_declContext) {}
 
 // ExitPackage_decl is called when production package_decl is exited.
 func (s *BaseYaaiListener) ExitPackage_decl(ctx *Package_declContext) {}
 
-// EnterPackage_name is called when production package_name is entered.
-func (s *BaseYaaiListener) EnterPackage_name(ctx *Package_nameContext) {}
+// EnterActor is called when production actor is entered.
+func (s *BaseYaaiListener) EnterActor(ctx *ActorContext) {}
 
-// ExitPackage_name is called when production package_name is exited.
-func (s *BaseYaaiListener) ExitPackage_name(ctx *Package_nameContext) {}
-
-// EnterPackage_name_end is called when production package_name_end is entered.
-func (s *BaseYaaiListener) EnterPackage_name_end(ctx *Package_name_endContext) {}
-
-// ExitPackage_name_end is called when production package_name_end is exited.
-func (s *BaseYaaiListener) ExitPackage_name_end(ctx *Package_name_endContext) {}
+// ExitActor is called when production actor is exited.
+func (s *BaseYaaiListener) ExitActor(ctx *ActorContext) {}
