@@ -11,17 +11,13 @@ L_BRACKET: '{';
 R_BRACKET: '}';
 EOL: [\n\r]+;
 
-fragment Space: ' ';
-fragment NewLine: '\n';
-fragment CariageReturn: '\r';
-fragment Tab: '\t';
-WS: (Space | NewLine | CariageReturn | Tab)+? -> skip;
+WS: [ \n\r\t]+ -> skip;
 
 // --------------------------------------------
 // Rules
 
 // Start rule
-unit :
+file :
    package_decl
    EOF;
 

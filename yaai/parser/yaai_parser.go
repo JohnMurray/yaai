@@ -34,7 +34,7 @@ var symbolicNames = []string{
 }
 
 var ruleNames = []string{
-	"unit", "package_decl", "actor",
+	"file", "package_decl", "actor",
 }
 
 type YaaiParser struct {
@@ -81,50 +81,50 @@ const (
 
 // YaaiParser rules.
 const (
-	YaaiParserRULE_unit         = 0
+	YaaiParserRULE_file         = 0
 	YaaiParserRULE_package_decl = 1
 	YaaiParserRULE_actor        = 2
 )
 
-// IUnitContext is an interface to support dynamic dispatch.
-type IUnitContext interface {
+// IFileContext is an interface to support dynamic dispatch.
+type IFileContext interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
 
-	// IsUnitContext differentiates from other interfaces.
-	IsUnitContext()
+	// IsFileContext differentiates from other interfaces.
+	IsFileContext()
 }
 
-type UnitContext struct {
+type FileContext struct {
 	*antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
-func NewEmptyUnitContext() *UnitContext {
-	var p = new(UnitContext)
+func NewEmptyFileContext() *FileContext {
+	var p = new(FileContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = YaaiParserRULE_unit
+	p.RuleIndex = YaaiParserRULE_file
 	return p
 }
 
-func (*UnitContext) IsUnitContext() {}
+func (*FileContext) IsFileContext() {}
 
-func NewUnitContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *UnitContext {
-	var p = new(UnitContext)
+func NewFileContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *FileContext {
+	var p = new(FileContext)
 
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = YaaiParserRULE_unit
+	p.RuleIndex = YaaiParserRULE_file
 
 	return p
 }
 
-func (s *UnitContext) GetParser() antlr.Parser { return s.parser }
+func (s *FileContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *UnitContext) Package_decl() IPackage_declContext {
+func (s *FileContext) Package_decl() IPackage_declContext {
 	var t = s.GetTypedRuleContext(reflect.TypeOf((*IPackage_declContext)(nil)).Elem(), 0)
 
 	if t == nil {
@@ -134,36 +134,36 @@ func (s *UnitContext) Package_decl() IPackage_declContext {
 	return t.(IPackage_declContext)
 }
 
-func (s *UnitContext) EOF() antlr.TerminalNode {
+func (s *FileContext) EOF() antlr.TerminalNode {
 	return s.GetToken(YaaiParserEOF, 0)
 }
 
-func (s *UnitContext) GetRuleContext() antlr.RuleContext {
+func (s *FileContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *UnitContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *FileContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *UnitContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *FileContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(YaaiListener); ok {
-		listenerT.EnterUnit(s)
+		listenerT.EnterFile(s)
 	}
 }
 
-func (s *UnitContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *FileContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(YaaiListener); ok {
-		listenerT.ExitUnit(s)
+		listenerT.ExitFile(s)
 	}
 }
 
-func (p *YaaiParser) Unit() (localctx IUnitContext) {
+func (p *YaaiParser) File() (localctx IFileContext) {
 	this := p
 	_ = this
 
-	localctx = NewUnitContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 0, YaaiParserRULE_unit)
+	localctx = NewFileContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 0, YaaiParserRULE_file)
 
 	defer func() {
 		p.ExitRule()

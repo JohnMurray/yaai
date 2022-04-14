@@ -21,11 +21,11 @@ func (s *BaseYaaiListener) EnterEveryRule(ctx antlr.ParserRuleContext) {}
 // ExitEveryRule is called when any rule is exited.
 func (s *BaseYaaiListener) ExitEveryRule(ctx antlr.ParserRuleContext) {}
 
-// EnterUnit is called when production unit is entered.
-func (s *BaseYaaiListener) EnterUnit(ctx *UnitContext) {}
+// EnterFile is called when production file is entered.
+func (s *BaseYaaiListener) EnterFile(ctx *FileContext) {}
 
-// ExitUnit is called when production unit is exited.
-func (s *BaseYaaiListener) ExitUnit(ctx *UnitContext) {}
+// ExitFile is called when production file is exited.
+func (s *BaseYaaiListener) ExitFile(ctx *FileContext) {}
 
 // EnterPackage_decl is called when production package_decl is entered.
 func (s *BaseYaaiListener) EnterPackage_decl(ctx *Package_declContext) {}

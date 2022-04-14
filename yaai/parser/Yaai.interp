@@ -21,7 +21,7 @@ EOL
 WS
 
 rule names:
-unit
+file
 package_decl
 actor
 
