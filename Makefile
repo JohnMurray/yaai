@@ -17,19 +17,12 @@ antlr:
 # files.
 	@echo "-------------------------------------------------"
 	@echo "Cleaning generated parser files"
-	@rm -f $(parser_dir)/yaai*
+	@rm -f $(parser_dir)/yaai* $(parser_dir)/Yaai*
 
 	@echo "-------------------------------------------------"
 	@echo "Running ANTLR"
-	java -jar bin/antlr.jar -Dlanguage=Go -o yaai/parser yaai/Yaai.g4
-
-# The generate files' package doesn't match the directory layout, just
-# move the generated content up one directory.
-	@echo "-------------------------------------------------"
-	@echo "Organizing generated files"
-	@mv $(parser_dir)/yaai/* $(parser_dir)/
-	@rm -r $(parser_dir)/yaai
-
+	java -jar bin/antlr.jar -Dlanguage=Go -o yaai/parser -Xexact-output-dir -package parser yaai/YaaiLexer.g4
+	java -jar bin/antlr.jar -Dlanguage=Go -o yaai/parser -Xexact-output-dir -package parser yaai/Yaai.g4
 
 
 .PHONY: antlr-debug

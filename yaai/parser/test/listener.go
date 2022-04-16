@@ -41,8 +41,8 @@ func createParser(input string) (*parser.YaaiParser, *testListener) {
 	return p, tl
 }
 
-func (tl *testListener) ExitPackage_decl(c *parser.Package_declContext) {
-	tl.packageName = c.IDENTIFIER().GetText()
+func (tl *testListener) ExitPackageClause(c *parser.PackageClauseContext) {
+	tl.packageName = c.GetPackageName().GetText()
 }
 
 // --------------------------------------------------------------------------------

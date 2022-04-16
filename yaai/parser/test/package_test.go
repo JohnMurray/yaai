@@ -8,9 +8,6 @@ import (
 )
 
 func TestParsePackageDecl(t *testing.T) {
-	p, tl := createParser("package Stonks\n")
-	antlr.ParseTreeWalkerDefault.Walk(tl, p.Package_decl())
-
 	testInputs := [][]string{
 		{"package Stonks\n", "Stonks"},             // title-case
 		{"package lowercase\n", "lowercase"},       // lowercase
@@ -21,7 +18,7 @@ func TestParsePackageDecl(t *testing.T) {
 	for _, test := range testInputs {
 		t.Run(test[0], func(t *testing.T) {
 			p, tl := createParser(test[0])
-			antlr.ParseTreeWalkerDefault.Walk(tl, p.Package_decl())
+			antlr.ParseTreeWalkerDefault.Walk(tl, p.PackageClause())
 			assert.Equal(t, test[1], tl.packageName)
 			assert.Empty(t, tl.errors)
 		})
@@ -39,7 +36,7 @@ func TestParseBadPackageDecl(t *testing.T) {
 	for _, test := range testInputs {
 		t.Run(test, func(t *testing.T) {
 			p, tl := createParser(test)
-			antlr.ParseTreeWalkerDefault.Walk(tl, p.Package_decl())
+			antlr.ParseTreeWalkerDefault.Walk(tl, p.PackageClause())
 			assert.NotEmpty(t, tl.errors)
 		})
 	}

@@ -1,7 +1,6 @@
 // Code generated from yaai/Yaai.g4 by ANTLR 4.9.3. DO NOT EDIT.
 
 package parser // Yaai
-
 import "github.com/antlr/antlr4/runtime/Go/antlr"
 
 // BaseYaaiListener is a complete listener for a parse tree produced by YaaiParser.
@@ -21,20 +20,8 @@ func (s *BaseYaaiListener) EnterEveryRule(ctx antlr.ParserRuleContext) {}
 // ExitEveryRule is called when any rule is exited.
 func (s *BaseYaaiListener) ExitEveryRule(ctx antlr.ParserRuleContext) {}
 
-// EnterFile is called when production file is entered.
-func (s *BaseYaaiListener) EnterFile(ctx *FileContext) {}
+// EnterPackageClause is called when production packageClause is entered.
+func (s *BaseYaaiListener) EnterPackageClause(ctx *PackageClauseContext) {}
 
-// ExitFile is called when production file is exited.
-func (s *BaseYaaiListener) ExitFile(ctx *FileContext) {}
-
-// EnterPackage_decl is called when production package_decl is entered.
-func (s *BaseYaaiListener) EnterPackage_decl(ctx *Package_declContext) {}
-
-// ExitPackage_decl is called when production package_decl is exited.
-func (s *BaseYaaiListener) ExitPackage_decl(ctx *Package_declContext) {}
-
-// EnterActor is called when production actor is entered.
-func (s *BaseYaaiListener) EnterActor(ctx *ActorContext) {}
-
-// ExitActor is called when production actor is exited.
-func (s *BaseYaaiListener) ExitActor(ctx *ActorContext) {}
+// ExitPackageClause is called when production packageClause is exited.
+func (s *BaseYaaiListener) ExitPackageClause(ctx *PackageClauseContext) {}
