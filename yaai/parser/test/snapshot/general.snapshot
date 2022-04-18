@@ -1,0 +1,17 @@
+PACKAGE(package) -> IDENTIFIER(myPackage) -> EOS(
+
+) -> TYPE(type) -> IDENTIFIER(myStruct) -> STRUCT(struct) -> L_BRACKET({) -> EOS(
+) -> IDENTIFIER(count) -> T_UINT32(uint32) -> EOS(
+) -> R_BRACKET(}) -> EOS(
+
+) -> ACTOR(actor) -> IDENTIFIER(myActor) -> L_BRACKET({) -> EOS(
+) -> RECEIVE(receive) -> L_PAREN(() -> IDENTIFIER(x) -> T_INT(int) -> R_PAREN()) -> LAMBDA_ARROW(->) -> L_BRACKET({) -> EOS(
+) -> LINE_COMMENT(// Do some stuff) -> EOS(
+) -> R_BRACKET(}) -> EOS(
+
+) -> RECEIVE(receive) -> L_PAREN(() -> IDENTIFIER(data) -> IDENTIFIER(myStruct) -> R_PAREN()) -> LAMBDA_ARROW(->) -> L_BRACKET({) -> EOS(
+) -> LINE_COMMENT(// handle the data) -> EOS(
+) -> R_BRACKET(}) -> EOS(
+) -> R_BRACKET(}) -> EOS(
+
+) -> EOF

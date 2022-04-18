@@ -8,7 +8,23 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestLexerPackage(t *testing.T) {
-	lexer := parser.NewYaaiLexer(antlr.NewInputStream(`package myPackage`))
-	assert.NoError(t, lexerSnapshot(t, "package-simple", lexer))
+func TestLexerGeneral(t *testing.T) {
+	lexer := parser.NewYaaiLexer(antlr.NewInputStream(`package myPackage
+
+type myStruct struct {
+	count uint32
+}
+
+actor myActor {
+	receive (x int) -> {
+		// Do some stuff
+	}
+
+	receive (data myStruct) -> {
+		// handle the data
+	}
+}
+
+`))
+	assert.NoError(t, lexerSnapshot(t, "general", lexer))
 }
