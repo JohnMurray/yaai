@@ -26,7 +26,8 @@ type MyStruct struct {
 
 actor MyActor {
 	receive (x int) -> {
-
+		// this is a comment
+		// actor MyCommentActor {}
 	}
 }
 `)
