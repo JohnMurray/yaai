@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"testing"
 
 	"github.com/JohnMurray/yaii/yaai/parser"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
@@ -16,7 +17,7 @@ type snapshotOpts struct {
 	snapshotDir string
 }
 
-func lexerSnapshot(name string, lexer *parser.YaaiLexer) error {
+func lexerSnapshot(t *testing.T, name string, lexer *parser.YaaiLexer) error {
 	opts := &snapshotOpts{
 		snapshotDir: os.Getenv("YAAI_SNAPSHOT_DIR"),
 		generate:    os.Getenv("YAAI_GENERATE") != "",
@@ -45,10 +46,10 @@ func lexerSnapshot(name string, lexer *parser.YaaiLexer) error {
 		return buf.Bytes(), nil
 	}
 
-	return snapshot(name, generate, opts)
+	return snapshot(t, name, generate, opts)
 }
 
-func snapshot(name string, generate func() ([]byte, error), options *snapshotOpts) error {
+func snapshot(t *testing.T, name string, generate func() ([]byte, error), options *snapshotOpts) error {
 	if options == nil {
 		return fmt.Errorf("provided options are nil")
 	}
@@ -66,7 +67,7 @@ func snapshot(name string, generate func() ([]byte, error), options *snapshotOpt
 	if options.generate {
 		return snapshotWrite(path, data)
 	} else {
-		return snapshotDiff(path, data)
+		return snapshotDiff(t, path, data)
 	}
 
 }
@@ -79,7 +80,7 @@ func snapshotWrite(path string, data []byte) error {
 	return nil
 }
 
-func snapshotDiff(path string, data []byte) error {
+func snapshotDiff(t *testing.T, path string, data []byte) error {
 	// check if the file exists
 	fInfo, err := os.Stat(path)
 	if err != nil {
@@ -98,17 +99,17 @@ func snapshotDiff(path string, data []byte) error {
 
 	// compare the daters
 	if bytes.Compare(snapshot, data) != 0 {
-		printDiff(snapshot, data)
-
+		printDiff(t, snapshot, data)
+		return fmt.Errorf("")
 	}
 
 	return nil
 }
 
 // Print the diff between two strings
-func printDiff(a, b []byte) {
+func printDiff(t *testing.T, a, b []byte) {
 	diff := diffmatchpatch.New()
 	diffs := diff.DiffMain(string(a), string(b), true)
 
-	fmt.Println(diff.DiffPrettyText(diffs))
+	t.Log(diff.DiffPrettyText(diffs))
 }

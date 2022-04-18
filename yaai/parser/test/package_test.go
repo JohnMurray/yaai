@@ -24,7 +24,7 @@ actor MyActor {
 	}
 }
 `))
-	assert.NoError(t, lexerSnapshot("package-simple", lexer))
+	assert.NoError(t, lexerSnapshot(t, "package-simple", lexer))
 }
 
 // func TestParsePackageDecl(t *testing.T) {

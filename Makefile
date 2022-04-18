@@ -33,6 +33,12 @@ antlr-debug:
 	@echo "Run:"
 	@echo "cd build/antlr-debug/yaai && java -cp  \".:$(root_dir)/bin/antlr.jar\" -Xmx500M org.antlr.v4.gui.TestRig yaai TOKEN -gui; popd"
 
+
 .PHONY: test
 test:
-	@go test -v ./...
+	YAAI_SNAPSHOT_DIR="$(root_dir)/yaai/parser/test/snapshot" go test -v ./...
+
+# Generate new snapshots
+.PHONY: snapshot
+snapshot:
+	YAAI_SNAPSHOT_DIR="$(root_dir)/yaai/parser/test/snapshot" YAAI_GENERATE=1 go test -v ./...
