@@ -1,14 +1,1 @@
-PACKAGE(package) -> IDENTIFIER(myPackage) -> EOS(
-
-) -> TYPE(type) -> IDENTIFIER(MyStruct) -> STRUCT(struct) -> L_BRACKET({) -> EOS(
-) -> IDENTIFIER(thing) -> T_INT(int) -> EOS(
-) -> IDENTIFIER(otherThing) -> T_STRING(string) -> EOS(
-) -> R_BRACKET(}) -> EOS(
-
-) -> ACTOR(actor) -> IDENTIFIER(MyActor) -> L_BRACKET({) -> EOS(
-) -> RECEIVE(receive) -> L_PAREN(() -> IDENTIFIER(x) -> T_INT(int) -> R_PAREN()) -> LAMBDA_ARROW(->) -> L_BRACKET({) -> EOS(
-) -> LINE_COMMENT(// this is a comment) -> EOS(
-) -> LINE_COMMENT(// actor MyCommentActor {}) -> EOS(
-) -> R_BRACKET(}) -> EOS(
-) -> R_BRACKET(}) -> EOS(
-) -> EOF
+PACKAGE(package) -> IDENTIFIER(myPackage) -> EOF
