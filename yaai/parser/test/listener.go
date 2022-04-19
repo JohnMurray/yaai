@@ -16,30 +16,22 @@ type testListener struct {
 	errors      []error
 }
 
-func createParser(input string) (*parser.YaaiParser, *testListener) {
-	tl := &testListener{}
-
-	// setup the input
-	is := antlr.NewInputStream(input)
-
-	// create the lexer
-	lexer := parser.NewYaaiLexer(is)
-	lexer.AddErrorListener(tl)
-	// for {
-	// 	t := lexer.NextToken()
-	// 	if t.GetTokenType() == antlr.TokenEOF {
-	// 		fmt.Println("EOF token")
-	// 		break
-	// 	}
-	// 	fmt.Printf("%s (%v)\n", lexer.SymbolicNames[t.GetTokenType()], t.GetText())
-	// }
-	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
-
-	// create the parser
-	p := parser.NewYaaiParser(stream)
-	p.AddErrorListener(tl)
-	return p, tl
-}
+// func createParser(input string) (*parser.YaaiParser, *testListener) {
+// 	tl := &testListener{}
+//
+// 	// setup the input
+// 	is := antlr.NewInputStream(input)
+//
+// 	// create the lexer
+// 	lexer := parser.NewYaaiLexer(is)
+// 	lexer.AddErrorListener(tl)
+// 	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
+//
+// 	// create the parser
+// 	p := parser.NewYaaiParser(stream)
+// 	p.AddErrorListener(tl)
+// 	return p, tl
+// }
 
 func (tl *testListener) ExitPackageClause(c *parser.PackageClauseContext) {
 	tl.packageName = c.GetPackageName().GetText()

@@ -75,7 +75,7 @@ func snapshot(t *testing.T, name string, generate func() ([]byte, error), option
 func snapshotWrite(path string, data []byte) error {
 	err := os.WriteFile(path, data, 0644)
 	if err != nil {
-		return fmt.Errorf("Issue writing snapshot to path %s: %v", path, err)
+		return fmt.Errorf("issue writing snapshot to path %s: %v", path, err)
 	}
 	return nil
 }
@@ -98,7 +98,7 @@ func snapshotDiff(t *testing.T, path string, data []byte) error {
 	}
 
 	// compare the daters
-	if bytes.Compare(snapshot, data) != 0 {
+	if !bytes.Equal(snapshot, data) {
 		printDiff(t, snapshot, data)
 		return fmt.Errorf("")
 	}
