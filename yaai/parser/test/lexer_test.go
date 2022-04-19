@@ -17,7 +17,7 @@ type myStruct struct {
 }
 
 actor myActor {
-	receive (x int) -> {
+	receive (x int) {
 		// Do some stuff
 	}
 

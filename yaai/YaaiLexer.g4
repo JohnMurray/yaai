@@ -20,7 +20,6 @@ L_BRACKET    : '{';
 R_BRACKET    : '}';
 L_PAREN      : '(';
 R_PAREN      : ')';
-LAMBDA_ARROW : '->';
 // SEMI: ';';
 
 // non-breaking whitespace
