@@ -16,7 +16,12 @@ type myStruct struct {
 }
 
 actor myActor {
+	var helloMsg string
 	var count := 0
+
+	init {
+		helloMsg = "Hello, World!"
+	}
 
 	receive (x int) {
 		// Do some stuff

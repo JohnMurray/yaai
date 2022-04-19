@@ -1,9 +1,10 @@
 token literal names:
 null
 'actor'
+'init'
 'package'
-'struct'
 'receive'
+'struct'
 'type'
 'var'
 'int'
@@ -15,6 +16,7 @@ null
 'string'
 null
 ':='
+'='
 '{'
 '}'
 '('
@@ -23,13 +25,15 @@ null
 null
 null
 null
+null
 
 token symbolic names:
 null
 ACTOR
+INIT
 PACKAGE
-STRUCT
 RECEIVE
+STRUCT
 TYPE
 VAR
 T_INT
@@ -41,11 +45,13 @@ T_UINT64
 T_STRING
 IDENTIFIER
 VAR_INITIALIZER
+ASSIGNMENT
 L_BRACKET
 R_BRACKET
 L_PAREN
 R_PAREN
 NUMERIC_LITERAL
+STRING_LITERAL
 NB_WS
 LINE_COMMENT
 EOS
@@ -55,4 +61,4 @@ packageClause
 
 
 atn:
-[3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 25, 8, 4, 2, 9, 2, 3, 2, 3, 2, 3, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 6, 2, 4, 3, 2, 2, 2, 4, 5, 7, 4, 2, 2, 5, 6, 7, 16, 2, 2, 6, 3, 3, 2, 2, 2, 2]
+[3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 28, 8, 4, 2, 9, 2, 3, 2, 3, 2, 3, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 6, 2, 4, 3, 2, 2, 2, 4, 5, 7, 5, 2, 2, 5, 6, 7, 17, 2, 2, 6, 3, 3, 2, 2, 2, 2]
