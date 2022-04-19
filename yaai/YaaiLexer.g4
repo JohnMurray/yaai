@@ -20,6 +20,11 @@ T_STRING : 'string';
 
 IDENTIFIER: [a-zA-Z][a-zA-Z0-9_]*;
 
+fragment STRING_BODY : ('\\"' | ~["])+;
+STRING_LITERAL  : '"' STRING_BODY '"';
+
+NUMERIC_LITERAL : [0-9]+;
+
 VAR_INITIALIZER : ':=';
 ASSIGNMENT      : '=';
 
@@ -35,10 +40,6 @@ PLUG         : '+';
 MINUS        : '-';
 // SEMI: ';';
 
-NUMERIC_LITERAL : [0-9]+;
-
-fragment STRING_BODY : ('\\"' | ~["])+;
-STRING_LITERAL  : '"' STRING_BODY '"';
 
 // non-breaking whitespace
 NB_WS: [ \t] -> skip;

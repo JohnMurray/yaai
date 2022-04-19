@@ -22,16 +22,15 @@ var parserATN = []uint16{
 var literalNames = []string{
 	"", "'actor'", "'func'", "'init'", "'package'", "'receive'", "'self'",
 	"'struct'", "'type'", "'var'", "'int'", "'int32'", "'int64'", "'uint'",
-	"'uint32'", "'uint64'", "'string'", "", "':='", "'='", "'+='", "'-='",
-	"'{'", "'}'", "'('", "')'", "'.'", "'+'", "'-'",
+	"'uint32'", "'uint64'", "'string'", "", "", "", "':='", "'='", "'+='",
+	"'-='", "'{'", "'}'", "'('", "')'", "'.'", "'+'", "'-'",
 }
 var symbolicNames = []string{
 	"", "ACTOR", "FUNC", "INIT", "PACKAGE", "RECEIVE", "SELF", "STRUCT", "TYPE",
 	"VAR", "T_INT", "T_INT32", "T_INT64", "T_UINT", "T_UINT32", "T_UINT64",
-	"T_STRING", "IDENTIFIER", "VAR_INITIALIZER", "ASSIGNMENT", "PLUS_EQUAL",
-	"MINUS_EQUAL", "L_BRACKET", "R_BRACKET", "L_PAREN", "R_PAREN", "DOT", "PLUG",
-	"MINUS", "NUMERIC_LITERAL", "STRING_LITERAL", "NB_WS", "LINE_COMMENT",
-	"EOS",
+	"T_STRING", "IDENTIFIER", "STRING_LITERAL", "NUMERIC_LITERAL", "VAR_INITIALIZER",
+	"ASSIGNMENT", "PLUS_EQUAL", "MINUS_EQUAL", "L_BRACKET", "R_BRACKET", "L_PAREN",
+	"R_PAREN", "DOT", "PLUG", "MINUS", "NB_WS", "LINE_COMMENT", "EOS",
 }
 
 var ruleNames = []string{
@@ -87,19 +86,19 @@ const (
 	YaaiParserT_UINT64        = 15
 	YaaiParserT_STRING        = 16
 	YaaiParserIDENTIFIER      = 17
-	YaaiParserVAR_INITIALIZER = 18
-	YaaiParserASSIGNMENT      = 19
-	YaaiParserPLUS_EQUAL      = 20
-	YaaiParserMINUS_EQUAL     = 21
-	YaaiParserL_BRACKET       = 22
-	YaaiParserR_BRACKET       = 23
-	YaaiParserL_PAREN         = 24
-	YaaiParserR_PAREN         = 25
-	YaaiParserDOT             = 26
-	YaaiParserPLUG            = 27
-	YaaiParserMINUS           = 28
-	YaaiParserNUMERIC_LITERAL = 29
-	YaaiParserSTRING_LITERAL  = 30
+	YaaiParserSTRING_LITERAL  = 18
+	YaaiParserNUMERIC_LITERAL = 19
+	YaaiParserVAR_INITIALIZER = 20
+	YaaiParserASSIGNMENT      = 21
+	YaaiParserPLUS_EQUAL      = 22
+	YaaiParserMINUS_EQUAL     = 23
+	YaaiParserL_BRACKET       = 24
+	YaaiParserR_BRACKET       = 25
+	YaaiParserL_PAREN         = 26
+	YaaiParserR_PAREN         = 27
+	YaaiParserDOT             = 28
+	YaaiParserPLUG            = 29
+	YaaiParserMINUS           = 30
 	YaaiParserNB_WS           = 31
 	YaaiParserLINE_COMMENT    = 32
 	YaaiParserEOS             = 33
