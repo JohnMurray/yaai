@@ -42,18 +42,18 @@ var ruleNames = []string{
 	"packageClause",
 }
 
-type YaaiParser struct {
+type Yaai struct {
 	*antlr.BaseParser
 }
 
-// NewYaaiParser produces a new parser instance for the optional input antlr.TokenStream.
+// NewYaai produces a new parser instance for the optional input antlr.TokenStream.
 //
-// The *YaaiParser instance produced may be reused by calling the SetInputStream method.
+// The *Yaai instance produced may be reused by calling the SetInputStream method.
 // The initial parser configuration is expensive to construct, and the object is not thread-safe;
 // however, if used within a Golang sync.Pool, the construction cost amortizes well and the
 // objects can be used in a thread-safe manner.
-func NewYaaiParser(input antlr.TokenStream) *YaaiParser {
-	this := new(YaaiParser)
+func NewYaai(input antlr.TokenStream) *Yaai {
+	this := new(Yaai)
 	deserializer := antlr.NewATNDeserializer(nil)
 	deserializedATN := deserializer.DeserializeFromUInt16(parserATN)
 	decisionToDFA := make([]*antlr.DFA, len(deserializedATN.DecisionToState))
@@ -71,60 +71,60 @@ func NewYaaiParser(input antlr.TokenStream) *YaaiParser {
 	return this
 }
 
-// YaaiParser tokens.
+// Yaai tokens.
 const (
-	YaaiParserEOF                = antlr.TokenEOF
-	YaaiParserACTOR              = 1
-	YaaiParserFOR                = 2
-	YaaiParserFUNC               = 3
-	YaaiParserINIT               = 4
-	YaaiParserINTERFACE          = 5
-	YaaiParserPACKAGE            = 6
-	YaaiParserRECEIVE            = 7
-	YaaiParserSELF               = 8
-	YaaiParserSTRUCT             = 9
-	YaaiParserTYPE               = 10
-	YaaiParserUNHANDLED          = 11
-	YaaiParserVAR                = 12
-	YaaiParserT_INT              = 13
-	YaaiParserT_INT32            = 14
-	YaaiParserT_INT64            = 15
-	YaaiParserT_UINT             = 16
-	YaaiParserT_UINT32           = 17
-	YaaiParserT_UINT64           = 18
-	YaaiParserT_STRING           = 19
-	YaaiParserIDENTIFIER         = 20
-	YaaiParserSTRING_LITERAL     = 21
-	YaaiParserNUMERIC_LITERAL    = 22
-	YaaiParserVAR_INITIALIZER    = 23
-	YaaiParserASSIGNMENT         = 24
-	YaaiParserINCR               = 25
-	YaaiParserDECR               = 26
-	YaaiParserPLUS_EQUAL         = 27
-	YaaiParserMINUS_EQUAL        = 28
-	YaaiParserEQUAL_EQUAL        = 29
-	YaaiParserNOT_EQUAL          = 30
-	YaaiParserLESS_THAN_EQUAL    = 31
-	YaaiParserGREATER_THAN_EQUAL = 32
-	YaaiParserLESS_THAN          = 33
-	YaaiParserGREATER_THAN       = 34
-	YaaiParserL_BRACKET          = 35
-	YaaiParserR_BRACKET          = 36
-	YaaiParserL_PAREN            = 37
-	YaaiParserR_PAREN            = 38
-	YaaiParserDOT                = 39
-	YaaiParserPLUS               = 40
-	YaaiParserMINUS              = 41
-	YaaiParserSTAR               = 42
-	YaaiParserF_SLASH            = 43
-	YaaiParserCOMMA              = 44
-	YaaiParserNB_WS              = 45
-	YaaiParserLINE_COMMENT       = 46
-	YaaiParserEOS                = 47
+	YaaiEOF                = antlr.TokenEOF
+	YaaiACTOR              = 1
+	YaaiFOR                = 2
+	YaaiFUNC               = 3
+	YaaiINIT               = 4
+	YaaiINTERFACE          = 5
+	YaaiPACKAGE            = 6
+	YaaiRECEIVE            = 7
+	YaaiSELF               = 8
+	YaaiSTRUCT             = 9
+	YaaiTYPE               = 10
+	YaaiUNHANDLED          = 11
+	YaaiVAR                = 12
+	YaaiT_INT              = 13
+	YaaiT_INT32            = 14
+	YaaiT_INT64            = 15
+	YaaiT_UINT             = 16
+	YaaiT_UINT32           = 17
+	YaaiT_UINT64           = 18
+	YaaiT_STRING           = 19
+	YaaiIDENTIFIER         = 20
+	YaaiSTRING_LITERAL     = 21
+	YaaiNUMERIC_LITERAL    = 22
+	YaaiVAR_INITIALIZER    = 23
+	YaaiASSIGNMENT         = 24
+	YaaiINCR               = 25
+	YaaiDECR               = 26
+	YaaiPLUS_EQUAL         = 27
+	YaaiMINUS_EQUAL        = 28
+	YaaiEQUAL_EQUAL        = 29
+	YaaiNOT_EQUAL          = 30
+	YaaiLESS_THAN_EQUAL    = 31
+	YaaiGREATER_THAN_EQUAL = 32
+	YaaiLESS_THAN          = 33
+	YaaiGREATER_THAN       = 34
+	YaaiL_BRACKET          = 35
+	YaaiR_BRACKET          = 36
+	YaaiL_PAREN            = 37
+	YaaiR_PAREN            = 38
+	YaaiDOT                = 39
+	YaaiPLUS               = 40
+	YaaiMINUS              = 41
+	YaaiSTAR               = 42
+	YaaiF_SLASH            = 43
+	YaaiCOMMA              = 44
+	YaaiNB_WS              = 45
+	YaaiLINE_COMMENT       = 46
+	YaaiEOS                = 47
 )
 
-// YaaiParserRULE_packageClause is the YaaiParser rule.
-const YaaiParserRULE_packageClause = 0
+// YaaiRULE_packageClause is the Yaai rule.
+const YaaiRULE_packageClause = 0
 
 // IPackageClauseContext is an interface to support dynamic dispatch.
 type IPackageClauseContext interface {
@@ -152,7 +152,7 @@ type PackageClauseContext struct {
 func NewEmptyPackageClauseContext() *PackageClauseContext {
 	var p = new(PackageClauseContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = YaaiParserRULE_packageClause
+	p.RuleIndex = YaaiRULE_packageClause
 	return p
 }
 
@@ -164,7 +164,7 @@ func NewPackageClauseContext(parser antlr.Parser, parent antlr.ParserRuleContext
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = YaaiParserRULE_packageClause
+	p.RuleIndex = YaaiRULE_packageClause
 
 	return p
 }
@@ -176,11 +176,11 @@ func (s *PackageClauseContext) GetPackageName() antlr.Token { return s.packageNa
 func (s *PackageClauseContext) SetPackageName(v antlr.Token) { s.packageName = v }
 
 func (s *PackageClauseContext) PACKAGE() antlr.TerminalNode {
-	return s.GetToken(YaaiParserPACKAGE, 0)
+	return s.GetToken(YaaiPACKAGE, 0)
 }
 
 func (s *PackageClauseContext) IDENTIFIER() antlr.TerminalNode {
-	return s.GetToken(YaaiParserIDENTIFIER, 0)
+	return s.GetToken(YaaiIDENTIFIER, 0)
 }
 
 func (s *PackageClauseContext) GetRuleContext() antlr.RuleContext {
@@ -203,12 +203,12 @@ func (s *PackageClauseContext) ExitRule(listener antlr.ParseTreeListener) {
 	}
 }
 
-func (p *YaaiParser) PackageClause() (localctx IPackageClauseContext) {
+func (p *Yaai) PackageClause() (localctx IPackageClauseContext) {
 	this := p
 	_ = this
 
 	localctx = NewPackageClauseContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 0, YaaiParserRULE_packageClause)
+	p.EnterRule(localctx, 0, YaaiRULE_packageClause)
 
 	defer func() {
 		p.ExitRule()
@@ -229,12 +229,12 @@ func (p *YaaiParser) PackageClause() (localctx IPackageClauseContext) {
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2)
-		p.Match(YaaiParserPACKAGE)
+		p.Match(YaaiPACKAGE)
 	}
 	{
 		p.SetState(3)
 
-		var _m = p.Match(YaaiParserIDENTIFIER)
+		var _m = p.Match(YaaiIDENTIFIER)
 
 		localctx.(*PackageClauseContext).packageName = _m
 	}

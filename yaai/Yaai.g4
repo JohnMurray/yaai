@@ -1,4 +1,4 @@
-grammar Yaai;
+parser grammar Yaai;
 
 /// // --------------------------------------------
 /// // Tokens

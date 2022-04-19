@@ -3,7 +3,7 @@
 package parser // Yaai
 import "github.com/antlr/antlr4/runtime/Go/antlr"
 
-// BaseYaaiListener is a complete listener for a parse tree produced by YaaiParser.
+// BaseYaaiListener is a complete listener for a parse tree produced by Yaai.
 type BaseYaaiListener struct{}
 
 var _ YaaiListener = &BaseYaaiListener{}
