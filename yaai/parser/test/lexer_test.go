@@ -20,7 +20,7 @@ actor myActor {
 	var count := 0
 
 	init {
-		helloMsg = "Hello, World!"
+		helloMsg = "Hello, World! \"{}()\"--++"
 	}
 
 	receive (x int) {
