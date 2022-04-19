@@ -30,6 +30,10 @@ actor myActor {
 	receive (data myStruct) {
 		// handle the data
 	}
+
+	func incCount() {
+		self.count += 1
+	}
 }
 
 `)))

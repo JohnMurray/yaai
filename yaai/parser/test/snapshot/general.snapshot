@@ -20,6 +20,10 @@ PACKAGE(package) -> IDENTIFIER(myPackage) -> EOS(
 ) -> RECEIVE(receive) -> L_PAREN(() -> IDENTIFIER(data) -> IDENTIFIER(myStruct) -> R_PAREN()) -> L_BRACKET({) -> EOS(
 ) -> LINE_COMMENT(// handle the data) -> EOS(
 ) -> R_BRACKET(}) -> EOS(
+
+) -> FUNC(func) -> IDENTIFIER(incCount) -> L_PAREN(() -> R_PAREN()) -> L_BRACKET({) -> EOS(
+) -> SELF(self) -> DOT(.) -> IDENTIFIER(count) -> PLUS_EQUAL(+=) -> NUMERIC_LITERAL(1) -> EOS(
+) -> R_BRACKET(}) -> EOS(
 ) -> R_BRACKET(}) -> EOS(
 
 ) -> EOF

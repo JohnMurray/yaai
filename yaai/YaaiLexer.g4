@@ -1,9 +1,11 @@
 lexer grammar YaaiLexer;
 
 ACTOR   : 'actor';
+FUNC    : 'func';
 INIT    : 'init';
 PACKAGE : 'package';
 RECEIVE : 'receive';
+SELF    : 'self';
 STRUCT  : 'struct';
 TYPE    : 'type';
 VAR     : 'var';
@@ -21,10 +23,16 @@ IDENTIFIER: [a-zA-Z][a-zA-Z0-9_]*;
 VAR_INITIALIZER : ':=';
 ASSIGNMENT      : '=';
 
+PLUS_EQUAL   : '+=';
+MINUS_EQUAL  : '-=';
+
 L_BRACKET    : '{';
 R_BRACKET    : '}';
 L_PAREN      : '(';
 R_PAREN      : ')';
+DOT          : '.';
+PLUG         : '+';
+MINUS        : '-';
 // SEMI: ';';
 
 NUMERIC_LITERAL : [0-9]+;
