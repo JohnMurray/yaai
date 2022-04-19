@@ -51,7 +51,6 @@ MINUS        : '-';
 STAR         : '*';
 F_SLASH      : '/';
 COMMA        : ',';
-// SEMI: ';';
 
 
 // non-breaking whitespace
