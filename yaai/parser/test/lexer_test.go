@@ -21,7 +21,7 @@ actor myActor {
 		// Do some stuff
 	}
 
-	receive (data myStruct) -> {
+	receive (data myStruct) {
 		// handle the data
 	}
 }
