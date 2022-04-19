@@ -15,24 +15,25 @@ var _ = reflect.Copy
 var _ = strconv.Itoa
 
 var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 38, 8, 4,
+	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 47, 8, 4,
 	2, 9, 2, 3, 2, 3, 2, 3, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 6, 2, 4, 3, 2, 2,
-	2, 4, 5, 7, 6, 2, 2, 5, 6, 7, 19, 2, 2, 6, 3, 3, 2, 2, 2, 2,
+	2, 4, 5, 7, 7, 2, 2, 5, 6, 7, 20, 2, 2, 6, 3, 3, 2, 2, 2, 2,
 }
 var literalNames = []string{
-	"", "'actor'", "'func'", "'init'", "'package'", "'receive'", "'self'",
+	"", "'actor'", "'for'", "'func'", "'init'", "'package'", "'receive'", "'self'",
 	"'struct'", "'type'", "'var'", "'int'", "'int32'", "'int64'", "'uint'",
-	"'uint32'", "'uint64'", "'string'", "", "", "", "':='", "'='", "'+='",
-	"'-='", "'{'", "'}'", "'('", "')'", "'.'", "'+'", "'-'", "'*'", "'/'",
-	"','",
+	"'uint32'", "'uint64'", "'string'", "", "", "", "':='", "'='", "'++'",
+	"'--'", "'+='", "'-='", "'=='", "'!='", "'<='", "'>='", "'<'", "'>'", "'{'",
+	"'}'", "'('", "')'", "'.'", "'+'", "'-'", "'*'", "'/'", "','",
 }
 var symbolicNames = []string{
-	"", "ACTOR", "FUNC", "INIT", "PACKAGE", "RECEIVE", "SELF", "STRUCT", "TYPE",
-	"VAR", "T_INT", "T_INT32", "T_INT64", "T_UINT", "T_UINT32", "T_UINT64",
+	"", "ACTOR", "FOR", "FUNC", "INIT", "PACKAGE", "RECEIVE", "SELF", "STRUCT",
+	"TYPE", "VAR", "T_INT", "T_INT32", "T_INT64", "T_UINT", "T_UINT32", "T_UINT64",
 	"T_STRING", "IDENTIFIER", "STRING_LITERAL", "NUMERIC_LITERAL", "VAR_INITIALIZER",
-	"ASSIGNMENT", "PLUS_EQUAL", "MINUS_EQUAL", "L_BRACKET", "R_BRACKET", "L_PAREN",
-	"R_PAREN", "DOT", "PLUG", "MINUS", "STAR", "F_SLASH", "COMMA", "NB_WS",
-	"LINE_COMMENT", "EOS",
+	"ASSIGNMENT", "INCR", "DECR", "PLUS_EQUAL", "MINUS_EQUAL", "EQUAL_EQUAL",
+	"NOT_EQUAL", "LESS_THAN_EQUAL", "GREATER_THAN_EQUAL", "LESS_THAN", "GREATER_THAN",
+	"L_BRACKET", "R_BRACKET", "L_PAREN", "R_PAREN", "DOT", "PLUS", "MINUS",
+	"STAR", "F_SLASH", "COMMA", "NB_WS", "LINE_COMMENT", "EOS",
 }
 
 var ruleNames = []string{
@@ -70,43 +71,52 @@ func NewYaaiParser(input antlr.TokenStream) *YaaiParser {
 
 // YaaiParser tokens.
 const (
-	YaaiParserEOF             = antlr.TokenEOF
-	YaaiParserACTOR           = 1
-	YaaiParserFUNC            = 2
-	YaaiParserINIT            = 3
-	YaaiParserPACKAGE         = 4
-	YaaiParserRECEIVE         = 5
-	YaaiParserSELF            = 6
-	YaaiParserSTRUCT          = 7
-	YaaiParserTYPE            = 8
-	YaaiParserVAR             = 9
-	YaaiParserT_INT           = 10
-	YaaiParserT_INT32         = 11
-	YaaiParserT_INT64         = 12
-	YaaiParserT_UINT          = 13
-	YaaiParserT_UINT32        = 14
-	YaaiParserT_UINT64        = 15
-	YaaiParserT_STRING        = 16
-	YaaiParserIDENTIFIER      = 17
-	YaaiParserSTRING_LITERAL  = 18
-	YaaiParserNUMERIC_LITERAL = 19
-	YaaiParserVAR_INITIALIZER = 20
-	YaaiParserASSIGNMENT      = 21
-	YaaiParserPLUS_EQUAL      = 22
-	YaaiParserMINUS_EQUAL     = 23
-	YaaiParserL_BRACKET       = 24
-	YaaiParserR_BRACKET       = 25
-	YaaiParserL_PAREN         = 26
-	YaaiParserR_PAREN         = 27
-	YaaiParserDOT             = 28
-	YaaiParserPLUG            = 29
-	YaaiParserMINUS           = 30
-	YaaiParserSTAR            = 31
-	YaaiParserF_SLASH         = 32
-	YaaiParserCOMMA           = 33
-	YaaiParserNB_WS           = 34
-	YaaiParserLINE_COMMENT    = 35
-	YaaiParserEOS             = 36
+	YaaiParserEOF                = antlr.TokenEOF
+	YaaiParserACTOR              = 1
+	YaaiParserFOR                = 2
+	YaaiParserFUNC               = 3
+	YaaiParserINIT               = 4
+	YaaiParserPACKAGE            = 5
+	YaaiParserRECEIVE            = 6
+	YaaiParserSELF               = 7
+	YaaiParserSTRUCT             = 8
+	YaaiParserTYPE               = 9
+	YaaiParserVAR                = 10
+	YaaiParserT_INT              = 11
+	YaaiParserT_INT32            = 12
+	YaaiParserT_INT64            = 13
+	YaaiParserT_UINT             = 14
+	YaaiParserT_UINT32           = 15
+	YaaiParserT_UINT64           = 16
+	YaaiParserT_STRING           = 17
+	YaaiParserIDENTIFIER         = 18
+	YaaiParserSTRING_LITERAL     = 19
+	YaaiParserNUMERIC_LITERAL    = 20
+	YaaiParserVAR_INITIALIZER    = 21
+	YaaiParserASSIGNMENT         = 22
+	YaaiParserINCR               = 23
+	YaaiParserDECR               = 24
+	YaaiParserPLUS_EQUAL         = 25
+	YaaiParserMINUS_EQUAL        = 26
+	YaaiParserEQUAL_EQUAL        = 27
+	YaaiParserNOT_EQUAL          = 28
+	YaaiParserLESS_THAN_EQUAL    = 29
+	YaaiParserGREATER_THAN_EQUAL = 30
+	YaaiParserLESS_THAN          = 31
+	YaaiParserGREATER_THAN       = 32
+	YaaiParserL_BRACKET          = 33
+	YaaiParserR_BRACKET          = 34
+	YaaiParserL_PAREN            = 35
+	YaaiParserR_PAREN            = 36
+	YaaiParserDOT                = 37
+	YaaiParserPLUS               = 38
+	YaaiParserMINUS              = 39
+	YaaiParserSTAR               = 40
+	YaaiParserF_SLASH            = 41
+	YaaiParserCOMMA              = 42
+	YaaiParserNB_WS              = 43
+	YaaiParserLINE_COMMENT       = 44
+	YaaiParserEOS                = 45
 )
 
 // YaaiParserRULE_packageClause is the YaaiParser rule.

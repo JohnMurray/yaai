@@ -1,6 +1,7 @@
 lexer grammar YaaiLexer;
 
 ACTOR   : 'actor';
+FOR     : 'for';
 FUNC    : 'func';
 INIT    : 'init';
 PACKAGE : 'package';
@@ -28,15 +29,24 @@ NUMERIC_LITERAL : [0-9]+;
 VAR_INITIALIZER : ':=';
 ASSIGNMENT      : '=';
 
+INCR         : '++';
+DECR         : '--';
 PLUS_EQUAL   : '+=';
 MINUS_EQUAL  : '-=';
+
+EQUAL_EQUAL        : '==';
+NOT_EQUAL          : '!=';
+LESS_THAN_EQUAL    : '<=';
+GREATER_THAN_EQUAL : '>=';
+LESS_THAN          : '<';
+GREATER_THAN       : '>';
 
 L_BRACKET    : '{';
 R_BRACKET    : '}';
 L_PAREN      : '(';
 R_PAREN      : ')';
 DOT          : '.';
-PLUG         : '+';
+PLUS         : '+';
 MINUS        : '-';
 STAR         : '*';
 F_SLASH      : '/';

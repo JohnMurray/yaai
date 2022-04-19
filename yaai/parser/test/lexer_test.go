@@ -36,5 +36,12 @@ actor myActor {
 	}
 }
 
+func doThing(strct *myStruct) (myStruct, error) {
+	// Do the thing... (ya know)
+	for i := 0; i < (*strct).count; i++ {
+		fmt.Println((*strct).msg)
+	}
+}
+
 `)))
 }

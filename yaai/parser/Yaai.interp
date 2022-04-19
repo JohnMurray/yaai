@@ -1,6 +1,7 @@
 token literal names:
 null
 'actor'
+'for'
 'func'
 'init'
 'package'
@@ -21,8 +22,16 @@ null
 null
 ':='
 '='
+'++'
+'--'
 '+='
 '-='
+'=='
+'!='
+'<='
+'>='
+'<'
+'>'
 '{'
 '}'
 '('
@@ -40,6 +49,7 @@ null
 token symbolic names:
 null
 ACTOR
+FOR
 FUNC
 INIT
 PACKAGE
@@ -60,14 +70,22 @@ STRING_LITERAL
 NUMERIC_LITERAL
 VAR_INITIALIZER
 ASSIGNMENT
+INCR
+DECR
 PLUS_EQUAL
 MINUS_EQUAL
+EQUAL_EQUAL
+NOT_EQUAL
+LESS_THAN_EQUAL
+GREATER_THAN_EQUAL
+LESS_THAN
+GREATER_THAN
 L_BRACKET
 R_BRACKET
 L_PAREN
 R_PAREN
 DOT
-PLUG
+PLUS
 MINUS
 STAR
 F_SLASH
@@ -81,4 +99,4 @@ packageClause
 
 
 atn:
-[3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 38, 8, 4, 2, 9, 2, 3, 2, 3, 2, 3, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 6, 2, 4, 3, 2, 2, 2, 4, 5, 7, 6, 2, 2, 5, 6, 7, 19, 2, 2, 6, 3, 3, 2, 2, 2, 2]
+[3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 47, 8, 4, 2, 9, 2, 3, 2, 3, 2, 3, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 6, 2, 4, 3, 2, 2, 2, 4, 5, 7, 7, 2, 2, 5, 6, 7, 20, 2, 2, 6, 3, 3, 2, 2, 2, 2]
