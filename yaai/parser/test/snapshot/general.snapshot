@@ -2,6 +2,7 @@ PACKAGE(package) -> IDENTIFIER(myPackage) -> EOS(
 
 ) -> TYPE(type) -> IDENTIFIER(myStruct) -> STRUCT(struct) -> L_BRACKET({) -> EOS(
 ) -> IDENTIFIER(count) -> T_UINT32(uint32) -> EOS(
+) -> IDENTIFIER(msg) -> T_STRING(string) -> EOS(
 ) -> R_BRACKET(}) -> EOS(
 
 ) -> ACTOR(actor) -> IDENTIFIER(myActor) -> L_BRACKET({) -> EOS(

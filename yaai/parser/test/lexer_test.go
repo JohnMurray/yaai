@@ -13,6 +13,7 @@ func TestLexerGeneral(t *testing.T) {
 
 type myStruct struct {
 	count uint32
+	msg   string
 }
 
 actor myActor {
