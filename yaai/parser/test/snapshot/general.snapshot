@@ -9,6 +9,10 @@ PACKAGE(package) -> IDENTIFIER(myPackage) -> EOS(
 ) -> VAR(var) -> IDENTIFIER(helloMsg) -> T_STRING(string) -> EOS(
 ) -> VAR(var) -> IDENTIFIER(count) -> VAR_INITIALIZER(:=) -> NUMERIC_LITERAL(0) -> EOS(
 
+) -> INIT(init) -> L_BRACKET({) -> EOS(
+) -> IDENTIFIER(helloMsg) -> ASSIGNMENT(=) -> STRING_LITERAL("Hello, World!") -> EOS(
+) -> R_BRACKET(}) -> EOS(
+
 ) -> RECEIVE(receive) -> L_PAREN(() -> IDENTIFIER(x) -> T_INT(int) -> R_PAREN()) -> L_BRACKET({) -> EOS(
 ) -> LINE_COMMENT(// Do some stuff) -> EOS(
 ) -> R_BRACKET(}) -> EOS(

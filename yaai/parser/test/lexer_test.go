@@ -8,7 +8,7 @@ import (
 )
 
 func TestLexerGeneral(t *testing.T) {
-	lexer := parser.NewYaaiLexer(antlr.NewInputStream(`package myPackage
+	lexerSnapshot(t, "general", parser.NewYaaiLexer(antlr.NewInputStream(`package myPackage
 
 type myStruct struct {
 	count uint32
@@ -32,6 +32,5 @@ actor myActor {
 	}
 }
 
-`))
-	lexerSnapshot(t, "general", lexer)
+`)))
 }
