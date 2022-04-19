@@ -1,5 +1,6 @@
 # yaai
 
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/JohnMurray/yaai)
 [![Go](https://github.com/JohnMurray/yaai/workflows/Go/badge.svg?branch=main)](https://github.com/JohnMurray/yaai/actions/workflows/test.yml)
 
 yet another actor implementation
