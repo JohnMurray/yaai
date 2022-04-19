@@ -15,20 +15,20 @@ var _ = reflect.Copy
 var _ = strconv.Itoa
 
 var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 23, 8, 4,
+	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 22, 8, 4,
 	2, 9, 2, 3, 2, 3, 2, 3, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 6, 2, 4, 3, 2, 2,
 	2, 4, 5, 7, 4, 2, 2, 5, 6, 7, 15, 2, 2, 6, 3, 3, 2, 2, 2, 2,
 }
 var literalNames = []string{
 	"", "'actor'", "'package'", "'struct'", "'receive'", "'type'", "'int'",
 	"'int32'", "'int64'", "'uint'", "'uint32'", "'uint64'", "'string'", "",
-	"'{'", "'}'", "'('", "')'", "'->'",
+	"'{'", "'}'", "'('", "')'",
 }
 var symbolicNames = []string{
 	"", "ACTOR", "PACKAGE", "STRUCT", "RECEIVE", "TYPE", "T_INT", "T_INT32",
 	"T_INT64", "T_UINT", "T_UINT32", "T_UINT64", "T_STRING", "IDENTIFIER",
-	"L_BRACKET", "R_BRACKET", "L_PAREN", "R_PAREN", "LAMBDA_ARROW", "NB_WS",
-	"LINE_COMMENT", "EOS",
+	"L_BRACKET", "R_BRACKET", "L_PAREN", "R_PAREN", "NB_WS", "LINE_COMMENT",
+	"EOS",
 }
 
 var ruleNames = []string{
@@ -84,10 +84,9 @@ const (
 	YaaiParserR_BRACKET    = 15
 	YaaiParserL_PAREN      = 16
 	YaaiParserR_PAREN      = 17
-	YaaiParserLAMBDA_ARROW = 18
-	YaaiParserNB_WS        = 19
-	YaaiParserLINE_COMMENT = 20
-	YaaiParserEOS          = 21
+	YaaiParserNB_WS        = 18
+	YaaiParserLINE_COMMENT = 19
+	YaaiParserEOS          = 20
 )
 
 // YaaiParserRULE_packageClause is the YaaiParser rule.
