@@ -31,8 +31,8 @@ actor myActor {
 		// handle the data
 	}
 
-	func incCount() {
-		self.count += 1
+	func incCount(by int, mult int) {
+		self.count += (by * mult)
 	}
 }
 

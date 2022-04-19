@@ -15,7 +15,7 @@ var _ = reflect.Copy
 var _ = strconv.Itoa
 
 var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 35, 8, 4,
+	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 38, 8, 4,
 	2, 9, 2, 3, 2, 3, 2, 3, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 6, 2, 4, 3, 2, 2,
 	2, 4, 5, 7, 6, 2, 2, 5, 6, 7, 19, 2, 2, 6, 3, 3, 2, 2, 2, 2,
 }
@@ -23,14 +23,16 @@ var literalNames = []string{
 	"", "'actor'", "'func'", "'init'", "'package'", "'receive'", "'self'",
 	"'struct'", "'type'", "'var'", "'int'", "'int32'", "'int64'", "'uint'",
 	"'uint32'", "'uint64'", "'string'", "", "", "", "':='", "'='", "'+='",
-	"'-='", "'{'", "'}'", "'('", "')'", "'.'", "'+'", "'-'",
+	"'-='", "'{'", "'}'", "'('", "')'", "'.'", "'+'", "'-'", "'*'", "'/'",
+	"','",
 }
 var symbolicNames = []string{
 	"", "ACTOR", "FUNC", "INIT", "PACKAGE", "RECEIVE", "SELF", "STRUCT", "TYPE",
 	"VAR", "T_INT", "T_INT32", "T_INT64", "T_UINT", "T_UINT32", "T_UINT64",
 	"T_STRING", "IDENTIFIER", "STRING_LITERAL", "NUMERIC_LITERAL", "VAR_INITIALIZER",
 	"ASSIGNMENT", "PLUS_EQUAL", "MINUS_EQUAL", "L_BRACKET", "R_BRACKET", "L_PAREN",
-	"R_PAREN", "DOT", "PLUG", "MINUS", "NB_WS", "LINE_COMMENT", "EOS",
+	"R_PAREN", "DOT", "PLUG", "MINUS", "STAR", "F_SLASH", "COMMA", "NB_WS",
+	"LINE_COMMENT", "EOS",
 }
 
 var ruleNames = []string{
@@ -99,9 +101,12 @@ const (
 	YaaiParserDOT             = 28
 	YaaiParserPLUG            = 29
 	YaaiParserMINUS           = 30
-	YaaiParserNB_WS           = 31
-	YaaiParserLINE_COMMENT    = 32
-	YaaiParserEOS             = 33
+	YaaiParserSTAR            = 31
+	YaaiParserF_SLASH         = 32
+	YaaiParserCOMMA           = 33
+	YaaiParserNB_WS           = 34
+	YaaiParserLINE_COMMENT    = 35
+	YaaiParserEOS             = 36
 )
 
 // YaaiParserRULE_packageClause is the YaaiParser rule.

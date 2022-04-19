@@ -38,6 +38,9 @@ R_PAREN      : ')';
 DOT          : '.';
 PLUG         : '+';
 MINUS        : '-';
+STAR         : '*';
+F_SLASH      : '/';
+COMMA        : ',';
 // SEMI: ';';
 
 

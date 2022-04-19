@@ -21,8 +21,8 @@ PACKAGE(package) -> IDENTIFIER(myPackage) -> EOS(
 ) -> LINE_COMMENT(// handle the data) -> EOS(
 ) -> R_BRACKET(}) -> EOS(
 
-) -> FUNC(func) -> IDENTIFIER(incCount) -> L_PAREN(() -> R_PAREN()) -> L_BRACKET({) -> EOS(
-) -> SELF(self) -> DOT(.) -> IDENTIFIER(count) -> PLUS_EQUAL(+=) -> NUMERIC_LITERAL(1) -> EOS(
+) -> FUNC(func) -> IDENTIFIER(incCount) -> L_PAREN(() -> IDENTIFIER(by) -> T_INT(int) -> COMMA(,) -> IDENTIFIER(mult) -> T_INT(int) -> R_PAREN()) -> L_BRACKET({) -> EOS(
+) -> SELF(self) -> DOT(.) -> IDENTIFIER(count) -> PLUS_EQUAL(+=) -> L_PAREN(() -> IDENTIFIER(by) -> STAR(*) -> IDENTIFIER(mult) -> R_PAREN()) -> EOS(
 ) -> R_BRACKET(}) -> EOS(
 ) -> R_BRACKET(}) -> EOS(
 
