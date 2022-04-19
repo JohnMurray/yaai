@@ -60,4 +60,4 @@ NB_WS: [ \t] -> skip;
 
 LINE_COMMENT           : '//' ~[\r\n]*      -> channel(HIDDEN);
 
-EOS:  ([\r\n]+ | ';' | EOF) -> mode(DEFAULT_MODE);
+EOS:  ([\r\n]+ | ';') -> mode(DEFAULT_MODE);

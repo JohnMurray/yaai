@@ -7,9 +7,21 @@ import "github.com/antlr/antlr4/runtime/Go/antlr"
 type YaaiListener interface {
 	antlr.ParseTreeListener
 
+	// EnterFile is called when entering the file production.
+	EnterFile(c *FileContext)
+
 	// EnterPackageClause is called when entering the packageClause production.
 	EnterPackageClause(c *PackageClauseContext)
 
+	// EnterEos is called when entering the eos production.
+	EnterEos(c *EosContext)
+
+	// ExitFile is called when exiting the file production.
+	ExitFile(c *FileContext)
+
 	// ExitPackageClause is called when exiting the packageClause production.
 	ExitPackageClause(c *PackageClauseContext)
+
+	// ExitEos is called when exiting the eos production.
+	ExitEos(c *EosContext)
 }

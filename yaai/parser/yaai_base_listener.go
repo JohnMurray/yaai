@@ -20,8 +20,20 @@ func (s *BaseYaaiListener) EnterEveryRule(ctx antlr.ParserRuleContext) {}
 // ExitEveryRule is called when any rule is exited.
 func (s *BaseYaaiListener) ExitEveryRule(ctx antlr.ParserRuleContext) {}
 
+// EnterFile is called when production file is entered.
+func (s *BaseYaaiListener) EnterFile(ctx *FileContext) {}
+
+// ExitFile is called when production file is exited.
+func (s *BaseYaaiListener) ExitFile(ctx *FileContext) {}
+
 // EnterPackageClause is called when production packageClause is entered.
 func (s *BaseYaaiListener) EnterPackageClause(ctx *PackageClauseContext) {}
 
 // ExitPackageClause is called when production packageClause is exited.
 func (s *BaseYaaiListener) ExitPackageClause(ctx *PackageClauseContext) {}
+
+// EnterEos is called when production eos is entered.
+func (s *BaseYaaiListener) EnterEos(ctx *EosContext) {}
+
+// ExitEos is called when production eos is exited.
+func (s *BaseYaaiListener) ExitEos(ctx *EosContext) {}

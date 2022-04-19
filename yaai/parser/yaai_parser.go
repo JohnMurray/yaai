@@ -15,9 +15,13 @@ var _ = reflect.Copy
 var _ = strconv.Itoa
 
 var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 49, 8, 4,
-	2, 9, 2, 3, 2, 3, 2, 3, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 6, 2, 4, 3, 2, 2,
-	2, 4, 5, 7, 8, 2, 2, 5, 6, 7, 22, 2, 2, 6, 3, 3, 2, 2, 2, 2,
+	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 49, 18, 4,
+	2, 9, 2, 4, 3, 9, 3, 4, 4, 9, 4, 3, 2, 3, 2, 3, 2, 3, 3, 3, 3, 3, 3, 3,
+	3, 3, 4, 3, 4, 3, 4, 2, 2, 5, 2, 4, 6, 2, 3, 3, 3, 49, 49, 2, 14, 2, 8,
+	3, 2, 2, 2, 4, 11, 3, 2, 2, 2, 6, 15, 3, 2, 2, 2, 8, 9, 5, 4, 3, 2, 9,
+	10, 7, 2, 2, 3, 10, 3, 3, 2, 2, 2, 11, 12, 7, 8, 2, 2, 12, 13, 7, 22, 2,
+	2, 13, 14, 5, 6, 4, 2, 14, 5, 3, 2, 2, 2, 15, 16, 9, 2, 2, 2, 16, 7, 3,
+	2, 2, 2, 2,
 }
 var literalNames = []string{
 	"", "'actor'", "'for'", "'func'", "'init'", "'interface'", "'package'",
@@ -39,7 +43,7 @@ var symbolicNames = []string{
 }
 
 var ruleNames = []string{
-	"packageClause",
+	"file", "packageClause", "eos",
 }
 
 type Yaai struct {
@@ -123,8 +127,120 @@ const (
 	YaaiEOS                = 47
 )
 
-// YaaiRULE_packageClause is the Yaai rule.
-const YaaiRULE_packageClause = 0
+// Yaai rules.
+const (
+	YaaiRULE_file          = 0
+	YaaiRULE_packageClause = 1
+	YaaiRULE_eos           = 2
+)
+
+// IFileContext is an interface to support dynamic dispatch.
+type IFileContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// IsFileContext differentiates from other interfaces.
+	IsFileContext()
+}
+
+type FileContext struct {
+	*antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyFileContext() *FileContext {
+	var p = new(FileContext)
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	p.RuleIndex = YaaiRULE_file
+	return p
+}
+
+func (*FileContext) IsFileContext() {}
+
+func NewFileContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *FileContext {
+	var p = new(FileContext)
+
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = YaaiRULE_file
+
+	return p
+}
+
+func (s *FileContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *FileContext) PackageClause() IPackageClauseContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IPackageClauseContext)(nil)).Elem(), 0)
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IPackageClauseContext)
+}
+
+func (s *FileContext) EOF() antlr.TerminalNode {
+	return s.GetToken(YaaiEOF, 0)
+}
+
+func (s *FileContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *FileContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *FileContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(YaaiListener); ok {
+		listenerT.EnterFile(s)
+	}
+}
+
+func (s *FileContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(YaaiListener); ok {
+		listenerT.ExitFile(s)
+	}
+}
+
+func (p *Yaai) File() (localctx IFileContext) {
+	this := p
+	_ = this
+
+	localctx = NewFileContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 0, YaaiRULE_file)
+
+	defer func() {
+		p.ExitRule()
+	}()
+
+	defer func() {
+		if err := recover(); err != nil {
+			if v, ok := err.(antlr.RecognitionException); ok {
+				localctx.SetException(v)
+				p.GetErrorHandler().ReportError(p, v)
+				p.GetErrorHandler().Recover(p, v)
+			} else {
+				panic(err)
+			}
+		}
+	}()
+
+	p.EnterOuterAlt(localctx, 1)
+	{
+		p.SetState(6)
+		p.PackageClause()
+	}
+	{
+		p.SetState(7)
+		p.Match(YaaiEOF)
+	}
+
+	return localctx
+}
 
 // IPackageClauseContext is an interface to support dynamic dispatch.
 type IPackageClauseContext interface {
@@ -179,6 +295,16 @@ func (s *PackageClauseContext) PACKAGE() antlr.TerminalNode {
 	return s.GetToken(YaaiPACKAGE, 0)
 }
 
+func (s *PackageClauseContext) Eos() IEosContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IEosContext)(nil)).Elem(), 0)
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IEosContext)
+}
+
 func (s *PackageClauseContext) IDENTIFIER() antlr.TerminalNode {
 	return s.GetToken(YaaiIDENTIFIER, 0)
 }
@@ -208,7 +334,7 @@ func (p *Yaai) PackageClause() (localctx IPackageClauseContext) {
 	_ = this
 
 	localctx = NewPackageClauseContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 0, YaaiRULE_packageClause)
+	p.EnterRule(localctx, 2, YaaiRULE_packageClause)
 
 	defer func() {
 		p.ExitRule()
@@ -228,15 +354,125 @@ func (p *Yaai) PackageClause() (localctx IPackageClauseContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(2)
+		p.SetState(9)
 		p.Match(YaaiPACKAGE)
 	}
 	{
-		p.SetState(3)
+		p.SetState(10)
 
 		var _m = p.Match(YaaiIDENTIFIER)
 
 		localctx.(*PackageClauseContext).packageName = _m
+	}
+	{
+		p.SetState(11)
+		p.Eos()
+	}
+
+	return localctx
+}
+
+// IEosContext is an interface to support dynamic dispatch.
+type IEosContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// IsEosContext differentiates from other interfaces.
+	IsEosContext()
+}
+
+type EosContext struct {
+	*antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyEosContext() *EosContext {
+	var p = new(EosContext)
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	p.RuleIndex = YaaiRULE_eos
+	return p
+}
+
+func (*EosContext) IsEosContext() {}
+
+func NewEosContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *EosContext {
+	var p = new(EosContext)
+
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = YaaiRULE_eos
+
+	return p
+}
+
+func (s *EosContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *EosContext) EOS() antlr.TerminalNode {
+	return s.GetToken(YaaiEOS, 0)
+}
+
+func (s *EosContext) EOF() antlr.TerminalNode {
+	return s.GetToken(YaaiEOF, 0)
+}
+
+func (s *EosContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *EosContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *EosContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(YaaiListener); ok {
+		listenerT.EnterEos(s)
+	}
+}
+
+func (s *EosContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(YaaiListener); ok {
+		listenerT.ExitEos(s)
+	}
+}
+
+func (p *Yaai) Eos() (localctx IEosContext) {
+	this := p
+	_ = this
+
+	localctx = NewEosContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 4, YaaiRULE_eos)
+	var _la int
+
+	defer func() {
+		p.ExitRule()
+	}()
+
+	defer func() {
+		if err := recover(); err != nil {
+			if v, ok := err.(antlr.RecognitionException); ok {
+				localctx.SetException(v)
+				p.GetErrorHandler().ReportError(p, v)
+				p.GetErrorHandler().Recover(p, v)
+			} else {
+				panic(err)
+			}
+		}
+	}()
+
+	p.EnterOuterAlt(localctx, 1)
+	{
+		p.SetState(13)
+		_la = p.GetTokenStream().LA(1)
+
+		if !(_la == YaaiEOF || _la == YaaiEOS) {
+			p.GetErrorHandler().RecoverInline(p)
+		} else {
+			p.GetErrorHandler().ReportMatch(p)
+			p.Consume()
+		}
 	}
 
 	return localctx
