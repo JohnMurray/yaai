@@ -26,4 +26,11 @@ PACKAGE(package) -> IDENTIFIER(myPackage) -> EOS(
 ) -> R_BRACKET(}) -> EOS(
 ) -> R_BRACKET(}) -> EOS(
 
+) -> FUNC(func) -> IDENTIFIER(doThing) -> L_PAREN(() -> IDENTIFIER(strct) -> STAR(*) -> IDENTIFIER(myStruct) -> R_PAREN()) -> L_PAREN(() -> IDENTIFIER(myStruct) -> COMMA(,) -> IDENTIFIER(error) -> R_PAREN()) -> L_BRACKET({) -> EOS(
+) -> LINE_COMMENT(// Do the thing... (ya know)) -> EOS(
+) -> FOR(for) -> IDENTIFIER(i) -> VAR_INITIALIZER(:=) -> NUMERIC_LITERAL(0) -> EOS(;) -> IDENTIFIER(i) -> LESS_THAN(<) -> L_PAREN(() -> STAR(*) -> IDENTIFIER(strct) -> R_PAREN()) -> DOT(.) -> IDENTIFIER(count) -> EOS(;) -> IDENTIFIER(i) -> INCR(++) -> L_BRACKET({) -> EOS(
+) -> IDENTIFIER(fmt) -> DOT(.) -> IDENTIFIER(Println) -> L_PAREN(() -> L_PAREN(() -> STAR(*) -> IDENTIFIER(strct) -> R_PAREN()) -> DOT(.) -> IDENTIFIER(msg) -> R_PAREN()) -> EOS(
+) -> R_BRACKET(}) -> EOS(
+) -> R_BRACKET(}) -> EOS(
+
 ) -> EOF
