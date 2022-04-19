@@ -1,15 +1,17 @@
 lexer grammar YaaiLexer;
 
-ACTOR   : 'actor';
-FOR     : 'for';
-FUNC    : 'func';
-INIT    : 'init';
-PACKAGE : 'package';
-RECEIVE : 'receive';
-SELF    : 'self';
-STRUCT  : 'struct';
-TYPE    : 'type';
-VAR     : 'var';
+ACTOR     : 'actor';
+FOR       : 'for';
+FUNC      : 'func';
+INIT      : 'init';
+INTERFACE : 'interface';
+PACKAGE   : 'package';
+RECEIVE   : 'receive';
+SELF      : 'self';
+STRUCT    : 'struct';
+TYPE      : 'type';
+UNHANDLED : 'unhandled';
+VAR       : 'var';
 
 T_INT    : 'int';
 T_INT32  : 'int32';

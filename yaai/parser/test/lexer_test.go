@@ -34,6 +34,10 @@ actor myActor {
 	func incCount(by int, mult int) {
 		self.count += (by * mult)
 	}
+
+	unhandled (ti TypeInfo, msg interface{}) {
+		// handled unkown/unsupported messages
+	}
 }
 
 func doThing(strct *myStruct) (myStruct, error) {

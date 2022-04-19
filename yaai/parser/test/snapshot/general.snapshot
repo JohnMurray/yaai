@@ -24,6 +24,10 @@ PACKAGE(package) -> IDENTIFIER(myPackage) -> EOS(
 ) -> FUNC(func) -> IDENTIFIER(incCount) -> L_PAREN(() -> IDENTIFIER(by) -> T_INT(int) -> COMMA(,) -> IDENTIFIER(mult) -> T_INT(int) -> R_PAREN()) -> L_BRACKET({) -> EOS(
 ) -> SELF(self) -> DOT(.) -> IDENTIFIER(count) -> PLUS_EQUAL(+=) -> L_PAREN(() -> IDENTIFIER(by) -> STAR(*) -> IDENTIFIER(mult) -> R_PAREN()) -> EOS(
 ) -> R_BRACKET(}) -> EOS(
+
+) -> UNHANDLED(unhandled) -> L_PAREN(() -> IDENTIFIER(ti) -> IDENTIFIER(TypeInfo) -> COMMA(,) -> IDENTIFIER(msg) -> INTERFACE(interface) -> L_BRACKET({) -> R_BRACKET(}) -> R_PAREN()) -> L_BRACKET({) -> EOS(
+) -> LINE_COMMENT(// handled unkown/unsupported messages) -> EOS(
+) -> R_BRACKET(}) -> EOS(
 ) -> R_BRACKET(}) -> EOS(
 
 ) -> FUNC(func) -> IDENTIFIER(doThing) -> L_PAREN(() -> IDENTIFIER(strct) -> STAR(*) -> IDENTIFIER(myStruct) -> R_PAREN()) -> L_PAREN(() -> IDENTIFIER(myStruct) -> COMMA(,) -> IDENTIFIER(error) -> R_PAREN()) -> L_BRACKET({) -> EOS(
