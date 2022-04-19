@@ -15,20 +15,20 @@ var _ = reflect.Copy
 var _ = strconv.Itoa
 
 var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 22, 8, 4,
+	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 25, 8, 4,
 	2, 9, 2, 3, 2, 3, 2, 3, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 6, 2, 4, 3, 2, 2,
-	2, 4, 5, 7, 4, 2, 2, 5, 6, 7, 15, 2, 2, 6, 3, 3, 2, 2, 2, 2,
+	2, 4, 5, 7, 4, 2, 2, 5, 6, 7, 16, 2, 2, 6, 3, 3, 2, 2, 2, 2,
 }
 var literalNames = []string{
-	"", "'actor'", "'package'", "'struct'", "'receive'", "'type'", "'int'",
-	"'int32'", "'int64'", "'uint'", "'uint32'", "'uint64'", "'string'", "",
-	"'{'", "'}'", "'('", "')'",
+	"", "'actor'", "'package'", "'struct'", "'receive'", "'type'", "'var'",
+	"'int'", "'int32'", "'int64'", "'uint'", "'uint32'", "'uint64'", "'string'",
+	"", "':='", "'{'", "'}'", "'('", "')'",
 }
 var symbolicNames = []string{
-	"", "ACTOR", "PACKAGE", "STRUCT", "RECEIVE", "TYPE", "T_INT", "T_INT32",
+	"", "ACTOR", "PACKAGE", "STRUCT", "RECEIVE", "TYPE", "VAR", "T_INT", "T_INT32",
 	"T_INT64", "T_UINT", "T_UINT32", "T_UINT64", "T_STRING", "IDENTIFIER",
-	"L_BRACKET", "R_BRACKET", "L_PAREN", "R_PAREN", "NB_WS", "LINE_COMMENT",
-	"EOS",
+	"VAR_INITIALIZER", "L_BRACKET", "R_BRACKET", "L_PAREN", "R_PAREN", "NUMERIC_LITERAL",
+	"NB_WS", "LINE_COMMENT", "EOS",
 }
 
 var ruleNames = []string{
@@ -66,27 +66,30 @@ func NewYaaiParser(input antlr.TokenStream) *YaaiParser {
 
 // YaaiParser tokens.
 const (
-	YaaiParserEOF          = antlr.TokenEOF
-	YaaiParserACTOR        = 1
-	YaaiParserPACKAGE      = 2
-	YaaiParserSTRUCT       = 3
-	YaaiParserRECEIVE      = 4
-	YaaiParserTYPE         = 5
-	YaaiParserT_INT        = 6
-	YaaiParserT_INT32      = 7
-	YaaiParserT_INT64      = 8
-	YaaiParserT_UINT       = 9
-	YaaiParserT_UINT32     = 10
-	YaaiParserT_UINT64     = 11
-	YaaiParserT_STRING     = 12
-	YaaiParserIDENTIFIER   = 13
-	YaaiParserL_BRACKET    = 14
-	YaaiParserR_BRACKET    = 15
-	YaaiParserL_PAREN      = 16
-	YaaiParserR_PAREN      = 17
-	YaaiParserNB_WS        = 18
-	YaaiParserLINE_COMMENT = 19
-	YaaiParserEOS          = 20
+	YaaiParserEOF             = antlr.TokenEOF
+	YaaiParserACTOR           = 1
+	YaaiParserPACKAGE         = 2
+	YaaiParserSTRUCT          = 3
+	YaaiParserRECEIVE         = 4
+	YaaiParserTYPE            = 5
+	YaaiParserVAR             = 6
+	YaaiParserT_INT           = 7
+	YaaiParserT_INT32         = 8
+	YaaiParserT_INT64         = 9
+	YaaiParserT_UINT          = 10
+	YaaiParserT_UINT32        = 11
+	YaaiParserT_UINT64        = 12
+	YaaiParserT_STRING        = 13
+	YaaiParserIDENTIFIER      = 14
+	YaaiParserVAR_INITIALIZER = 15
+	YaaiParserL_BRACKET       = 16
+	YaaiParserR_BRACKET       = 17
+	YaaiParserL_PAREN         = 18
+	YaaiParserR_PAREN         = 19
+	YaaiParserNUMERIC_LITERAL = 20
+	YaaiParserNB_WS           = 21
+	YaaiParserLINE_COMMENT    = 22
+	YaaiParserEOS             = 23
 )
 
 // YaaiParserRULE_packageClause is the YaaiParser rule.

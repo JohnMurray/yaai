@@ -5,6 +5,7 @@ PACKAGE : 'package';
 STRUCT  : 'struct';
 RECEIVE : 'receive';
 TYPE    : 'type';
+VAR     : 'var';
 
 T_INT    : 'int';
 T_INT32  : 'int32';
@@ -16,11 +17,15 @@ T_STRING : 'string';
 
 IDENTIFIER: [a-zA-Z][a-zA-Z0-9_]*;
 
+VAR_INITIALIZER : ':=';
+
 L_BRACKET    : '{';
 R_BRACKET    : '}';
 L_PAREN      : '(';
 R_PAREN      : ')';
 // SEMI: ';';
+
+NUMERIC_LITERAL : [0-9]+;
 
 // non-breaking whitespace
 NB_WS: [ \t] -> skip;

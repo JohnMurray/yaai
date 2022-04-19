@@ -16,6 +16,8 @@ type myStruct struct {
 }
 
 actor myActor {
+	var count := 0
+
 	receive (x int) {
 		// Do some stuff
 	}

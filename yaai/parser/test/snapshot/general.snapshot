@@ -6,6 +6,8 @@ PACKAGE(package) -> IDENTIFIER(myPackage) -> EOS(
 ) -> R_BRACKET(}) -> EOS(
 
 ) -> ACTOR(actor) -> IDENTIFIER(myActor) -> L_BRACKET({) -> EOS(
+) -> VAR(var) -> IDENTIFIER(count) -> VAR_INITIALIZER(:=) -> NUMERIC_LITERAL(0) -> EOS(
+
 ) -> RECEIVE(receive) -> L_PAREN(() -> IDENTIFIER(x) -> T_INT(int) -> R_PAREN()) -> L_BRACKET({) -> EOS(
 ) -> LINE_COMMENT(// Do some stuff) -> EOS(
 ) -> R_BRACKET(}) -> EOS(
