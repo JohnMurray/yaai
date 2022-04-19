@@ -10,6 +10,7 @@ import (
 	"github.com/JohnMurray/yaii/yaai/parser"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/sergi/go-diff/diffmatchpatch"
+	"github.com/stretchr/testify/assert"
 )
 
 type snapshotOpts struct {
@@ -17,7 +18,7 @@ type snapshotOpts struct {
 	snapshotDir string
 }
 
-func lexerSnapshot(t *testing.T, name string, lexer *parser.YaaiLexer) error {
+func lexerSnapshot(t *testing.T, name string, lexer *parser.YaaiLexer) {
 	opts := &snapshotOpts{
 		snapshotDir: os.Getenv("YAAI_SNAPSHOT_DIR"),
 		generate:    os.Getenv("YAAI_GENERATE") != "",
@@ -46,7 +47,7 @@ func lexerSnapshot(t *testing.T, name string, lexer *parser.YaaiLexer) error {
 		return buf.Bytes(), nil
 	}
 
-	return snapshot(t, name, generate, opts)
+	assert.NoError(t, snapshot(t, name, generate, opts))
 }
 
 func snapshot(t *testing.T, name string, generate func() ([]byte, error), options *snapshotOpts) error {

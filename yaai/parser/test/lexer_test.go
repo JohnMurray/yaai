@@ -5,7 +5,6 @@ import (
 
 	"github.com/JohnMurray/yaii/yaai/parser"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestLexerGeneral(t *testing.T) {
@@ -27,5 +26,5 @@ actor myActor {
 }
 
 `))
-	assert.NoError(t, lexerSnapshot(t, "general", lexer))
+	lexerSnapshot(t, "general", lexer)
 }
