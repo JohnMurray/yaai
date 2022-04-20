@@ -1,10 +1,14 @@
 package test
 
+//lint:file-ignore U1000 Methods used by antlr's visitor pattern
+
 import (
 	"fmt"
+	"testing"
 
 	"github.com/JohnMurray/yaii/yaai/parser"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/stretchr/testify/assert"
 )
 
 // Test implementationf or a parse-tree and error listener
@@ -12,26 +16,29 @@ type testListener struct {
 	*parser.BaseYaaiListener
 	*antlr.DefaultErrorListener
 
+	t           *testing.T
 	packageName string
 	errors      []error
 }
 
-// func createParser(input string) (*parser.YaaiParser, *testListener) {
-// 	tl := &testListener{}
-//
-// 	// setup the input
-// 	is := antlr.NewInputStream(input)
-//
-// 	// create the lexer
-// 	lexer := parser.NewYaaiLexer(is)
-// 	lexer.AddErrorListener(tl)
-// 	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
-//
-// 	// create the parser
-// 	p := parser.NewYaaiParser(stream)
-// 	p.AddErrorListener(tl)
-// 	return p, tl
-// }
+func createParser(t *testing.T, input string) (*parser.Yaai, *testListener) {
+	tl := &testListener{t: t}
+
+	// setup the input
+	is := antlr.NewInputStream(input)
+
+	// create the lexer
+	lexer := parser.NewYaaiLexer(is)
+	lexer.RemoveErrorListeners()
+	lexer.AddErrorListener(tl)
+	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
+
+	// create the parser
+	p := parser.NewYaai(stream)
+	p.RemoveErrorListeners()
+	p.AddErrorListener(tl)
+	return p, tl
+}
 
 func (tl *testListener) ExitPackageClause(c *parser.PackageClauseContext) {
 	tl.packageName = c.GetPackageName().GetText()
@@ -54,14 +61,11 @@ func (tl *testListener) SyntaxError(recognizer antlr.Recognizer,
 }
 
 func (tl *testListener) ReportAmbiguity(recognizer antlr.Parser, dfa *antlr.DFA, startIndex, stopIndex int, exact bool, ambigAlts *antlr.BitSet, configs antlr.ATNConfigSet) {
-	fmt.Println("!!!!!!!!!!!!!!!!! Report Ambiguity [error listener]")
-	fmt.Println("  --> This is new.... /shrug")
+	assert.Fail(tl.t, "Report Ambiguity [error listener] --> This is new... /shrug")
 }
 func (tl *testListener) ReportAttemptingFullContext(recognizer antlr.Parser, dfa *antlr.DFA, startIndex, stopIndex int, conflictingAlts *antlr.BitSet, configs antlr.ATNConfigSet) {
-	fmt.Println("!!!!!!!!!!!!!!!!! Report Attempting Full Context [error listener]")
-	fmt.Println("  --> This is new.... /shrug")
+	assert.Fail(tl.t, "Report Attempting Full Context [error listener] --> This is new... /shrug")
 }
 func (tl *testListener) ReportContextSensitivity(recognizer antlr.Parser, dfa *antlr.DFA, startIndex, stopIndex, prediction int, configs antlr.ATNConfigSet) {
-	fmt.Println("!!!!!!!!!!!!!!!!! Report Context Sensitivity [error listener]")
-	fmt.Println("  --> This is new.... /shrug")
+	assert.Fail(tl.t, "Report Context Sensitivity [error listener] --> This is new... /shrug")
 }
