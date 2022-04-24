@@ -1,4 +1,4 @@
-// Code generated from yaai/Yaai.g4 by ANTLR 4.9.3. DO NOT EDIT.
+// Code generated from /home/john/Dropbox/projects/yaai//antlr/Yaai.g4 by ANTLR 4.9.3. DO NOT EDIT.
 
 package parser // Yaai
 import "github.com/antlr/antlr4/runtime/Go/antlr"
