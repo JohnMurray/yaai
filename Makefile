@@ -3,7 +3,7 @@ SHELL=/bin/bash -O extglob -c
 
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 root_dir := $(dir $(mkfile_path))
-parser_dir := "$(root_dir)yaai/parser"
+parser_dir := "$(root_dir)antlr/parser"
 
 .PHONY: setup
 setup:
@@ -21,14 +21,14 @@ antlr:
 
 	@echo "-------------------------------------------------"
 	@echo "Running ANTLR"
-	java -jar bin/antlr.jar -Dlanguage=Go -o yaai/parser -Xexact-output-dir -package parser yaai/YaaiLexer.g4
-	java -jar bin/antlr.jar -Dlanguage=Go -o yaai/parser -Xexact-output-dir -package parser yaai/Yaai.g4
+	java -jar bin/antlr.jar -Dlanguage=Go -o $(parser_dir) -Xexact-output-dir -package parser $(root_dir)/antlr/YaaiLexer.g4
+	java -jar bin/antlr.jar -Dlanguage=Go -o $(parser_dir) -Xexact-output-dir -package parser $(root_dir)/antlr/Yaai.g4
 
 
 .PHONY: antlr-debug
 antlr-debug:
 	@mkdir -p build/antlr-debug
-	@java -jar bin/antlr.jar -o build/antlr-debug yaai/Yaai.g4
+	@java -jar bin/antlr.jar -o build/antlr-debug $(root_dir)/antlr/Yaai.g4
 	@cd build/antlr-debug/yaai && javac -cp ".:$(root_dir)/bin/antlr.jar" -g yaai*.java
 	@echo "Run:"
 	@echo "cd build/antlr-debug/yaai && java -cp  \".:$(root_dir)/bin/antlr.jar\" -Xmx500M org.antlr.v4.gui.TestRig yaai TOKEN -gui; popd"
@@ -36,9 +36,9 @@ antlr-debug:
 
 .PHONY: test
 test:
-	YAAI_SNAPSHOT_DIR="$(root_dir)/yaai/parser/test/snapshot" go test -v ./yaai/...
+	YAAI_SNAPSHOT_DIR="$(parser_dir)/test/snapshot" go test -v ./antlr/...
 
 # Generate new snapshots
 .PHONY: snapshot
 snapshot:
-	YAAI_SNAPSHOT_DIR="$(root_dir)/yaai/parser/test/snapshot" YAAI_GENERATE=1 go test -v ./yaai/...
+	YAAI_SNAPSHOT_DIR="$(parser_dir)/test/snapshot" YAAI_GENERATE=1 go test -v ./antlr/...
