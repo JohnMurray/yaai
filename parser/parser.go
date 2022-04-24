@@ -18,6 +18,11 @@ func ParseFile(path string) Tree {
 		project: &Project{
 			Packages: []*Package{},
 		},
+		activeFile: &File{
+			Path:     path,
+			Filename: path,
+		},
+		activePackage: nil,
 	}
 
 	// setup the input
@@ -36,7 +41,7 @@ func ParseFile(path string) Tree {
 
 type yaaiParseListener struct {
 	*ap.BaseYaaiListener
-	// *antlr.DefaultErrorListener
+	*antlr.DefaultErrorListener
 
 	project *Project
 
@@ -44,7 +49,30 @@ type yaaiParseListener struct {
 	activePackage *Package
 }
 
-func (p *yaaiParseListener) EnterFile(ctx ap.FileContext) {
+var _ ap.YaaiListener = &yaaiParseListener{}
+
+func (p *yaaiParseListener) SyntaxError(recognizer antlr.Recognizer,
+	offendingSymbol interface{},
+	line, column int,
+	msg string,
+	e antlr.RecognitionException) {
+
+	fmt.Printf(
+		"[%d:%d] (%v) %s\n",
+		line, column, offendingSymbol, msg,
+	)
+}
+func (tl *yaaiParseListener) ReportAmbiguity(recognizer antlr.Parser, dfa *antlr.DFA, startIndex, stopIndex int, exact bool, ambigAlts *antlr.BitSet, configs antlr.ATNConfigSet) {
+	fmt.Println("Report Ambiguity [error listener] --> This is new... /shrug")
+}
+func (tl *yaaiParseListener) ReportAttemptingFullContext(recognizer antlr.Parser, dfa *antlr.DFA, startIndex, stopIndex int, conflictingAlts *antlr.BitSet, configs antlr.ATNConfigSet) {
+	fmt.Println("Report Attempting Full Context [error listener] --> This is new... /shrug")
+}
+func (tl *yaaiParseListener) ReportContextSensitivity(recognizer antlr.Parser, dfa *antlr.DFA, startIndex, stopIndex, prediction int, configs antlr.ATNConfigSet) {
+	fmt.Println("Report Context Sensitivity [error listener] --> This is new... /shrug")
+}
+
+func (p *yaaiParseListener) EnterFile(ctx *ap.FileContext) {
 	// The active file should be set before parsing begins, so
 	// let's just make sure it's there since we'll be referencing
 	// this quite a bit
@@ -53,8 +81,7 @@ func (p *yaaiParseListener) EnterFile(ctx ap.FileContext) {
 	}
 }
 
-func (p *yaaiParseListener) ExitFile(ctx ap.FileContext) {
-	fmt.Println("exit file")
+func (p *yaaiParseListener) ExitFile(ctx *ap.FileContext) {
 	// We're done parsing the file, reset the state on the listener.
 	// These should be reset appropriately on the next pass
 	p.activeFile = nil
@@ -63,9 +90,7 @@ func (p *yaaiParseListener) ExitFile(ctx ap.FileContext) {
 	// TOOD: make sure that there is nothing "open" still
 }
 
-func (p *yaaiParseListener) EnterPackageClause(ctx ap.PackageClauseContext) {
-	fmt.Println("enter package")
-
+func (p *yaaiParseListener) EnterPackageClause(ctx *ap.PackageClauseContext) {
 	if p.activePackage != nil {
 		panic(fmt.Sprintf("package name cannot be set, found '%s'", p.activePackage.Name))
 	}
