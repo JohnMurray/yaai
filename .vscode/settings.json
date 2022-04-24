@@ -1,10 +1,10 @@
 {
     "filewatcher.commands": [
-        {
-            "event": "onFileChange",
-            "isAsync": true,
-            "match": ".*\\.go$",
-            "cmd": "cd /home/john/Dropbox/projects/yaai && go run yaai/main.go"
-        }
+        // {
+        //     "event": "onFileChange",
+        //     "isAsync": true,
+        //     "match": ".*\\.go$",
+        //     "cmd": "cd /home/john/Dropbox/projects/yaai && go run yaai/main.go"
+        // }
     ]
 }
