@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/JohnMurray/yaii/antlr/parser"
+	"github.com/JohnMurray/yaai/antlr/parser"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/stretchr/testify/assert"
 )

@@ -3,7 +3,7 @@ package test
 import (
 	"testing"
 
-	"github.com/JohnMurray/yaii/antlr/parser"
+	"github.com/JohnMurray/yaai/antlr/parser"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 )
 

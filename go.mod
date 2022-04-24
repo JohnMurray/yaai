@@ -1,4 +1,4 @@
-module github.com/JohnMurray/yaii
+module github.com/JohnMurray/yaai
 
 go 1.17
 
