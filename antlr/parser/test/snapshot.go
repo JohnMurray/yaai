@@ -7,7 +7,7 @@ import (
 	"path"
 	"testing"
 
-	"github.com/JohnMurray/yaii/yaai/parser"
+	"github.com/JohnMurray/yaii/antlr/parser"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/sergi/go-diff/diffmatchpatch"
 	"github.com/stretchr/testify/assert"
