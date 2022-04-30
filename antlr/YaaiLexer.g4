@@ -13,13 +13,15 @@ TYPE      : 'type';
 UNHANDLED : 'unhandled';
 VAR       : 'var';
 
-T_INT    : 'int';
-T_INT32  : 'int32';
-T_INT64  : 'int64';
-T_UINT   : 'uint';
-T_UINT32 : 'uint32';
-T_UINT64 : 'uint64';
-T_STRING : 'string';
+T_INT     : 'int';
+T_INT32   : 'int32';
+T_INT64   : 'int64';
+T_UINT    : 'uint';
+T_UINT32  : 'uint32';
+T_UINT64  : 'uint64';
+T_FLOAT32 : 'float32';
+T_FLOAT64 : 'float64';
+T_STRING  : 'string';
 
 IDENTIFIER: [a-zA-Z][a-zA-Z0-9_]*;
 
@@ -27,6 +29,7 @@ fragment STRING_BODY : ('\\"' | ~["])+;
 STRING_LITERAL  : '"' STRING_BODY '"';
 
 NUMERIC_LITERAL : [0-9]+;
+FLOAT_LITERAL   : [0-9]+ '.' [0-9]+;
 
 VAR_INITIALIZER : ':=';
 ASSIGNMENT      : '=';
